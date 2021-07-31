@@ -16,6 +16,6 @@ public class DOBValidator implements ConstraintValidator<DOB, LocalDate> {
 
     @Override
     public boolean isValid(LocalDate dob, ConstraintValidatorContext constraintValidatorContext) {
-        return (dob.isAfter(LocalDate.of(1990, 01, 01)) && dob.isAfter(LocalDate.now().plusYears(minimumAge)));
+        return (dob.isAfter(LocalDate.of(1900, 01, 01)) && dob.isBefore(LocalDate.now().minusYears(minimumAge)));
     }
 }

@@ -33,7 +33,7 @@ public class Patient {
 
     @NonNull
     @Column(name = "e_mail", nullable = false, length = 100)
-    private String eMail;
+    private String email;
 
     //TODO connection the vaccination entity
 

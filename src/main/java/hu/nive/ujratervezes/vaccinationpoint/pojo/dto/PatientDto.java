@@ -1,6 +1,7 @@
 package hu.nive.ujratervezes.vaccinationpoint.pojo.dto;
 
 import hu.nive.ujratervezes.vaccinationpoint.Vaccine_type;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,13 +13,30 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PatientDto {
+
+    @Schema(description = "unique identifier of the patient", example = "1")
     private Long id;
+
+    @Schema(description = "medical number of the patient", example = "123456788")
     private String taj;
+
+    @Schema(description = "name of the patient", example = "John Doe")
     private String name;
+
+    @Schema(description = "date of birth of the patient", example = "1957-12-24")
     private LocalDate dateOfBirth;
-    private String eMail;
+
+    @Schema(description = "E-mail of the patient", example = "johndoe@example.com")
+    private String email;
+
     //TODO connection the vaccination dto
+
+    @Schema(description = "last vaccination date of the patient")
     private LocalDateTime lastVaccinationDate;
+
+    @Schema(description = "number of doses vaccinated of the patient", example = "1")
     private int doses;
+
+    @Schema(description = "vaccination type of the patient", example = "COMIRNATY")
     private Vaccine_type vaccineType;
 }

@@ -42,8 +42,8 @@ class DOBValidatorTest {
         validator.initialize(DOBValidatorTest.class.getDeclaredField("date").getAnnotation(DOB.class));
         LocalDate base = LocalDate.now();
 
-        assertTrue(validator.isValid(base.plusYears(18).plusDays(1), context));
-        assertTrue(validator.isValid(base.plusYears(20), context));
-        assertTrue(validator.isValid(base.plusYears(60), context));
+        assertTrue(validator.isValid(base.minusYears(18).minusDays(1), context));
+        assertTrue(validator.isValid(base.minusYears(20), context));
+        assertTrue(validator.isValid(base.minusYears(60), context));
     }
 }

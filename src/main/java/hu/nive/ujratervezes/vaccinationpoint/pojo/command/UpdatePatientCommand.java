@@ -14,21 +14,21 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreatePatientCommand {
+public class UpdatePatientCommand {
 
     @MedicalRecord
-    @Schema(description = "medical number of the patient", example = "123456788")
+    @Schema(description = "medical number of the patient", example = "037687210")
     private String taj;
 
     @Name
-    @Schema(description = "name of the patient", example = "John Doe")
+    @Schema(description = "name of the patient", example = "Jane Doe")
     private String name;
 
     @DOB
-    @Schema(description = "date of birth of the patient", example = "1957-12-24")
+    @Schema(description = "date of birth of the patient", example = "1985-10-18")
     private LocalDate dateOfBirth;
 
     @EMail
-    @Schema(description = "E-mail of the patient", example = "johndoe@example.com")
+    @Schema(description = "E-mail of the patient", example = "janedode@example.com")
     private String email;
 }

@@ -1,0 +1,37 @@
+### list all
+GET http://localhost:8080/api/patient/all
+Accept: application/json
+
+### find id
+GET http://localhost:8080/api/patient/1
+Accept: application/json
+
+### create
+POST http://localhost:8080/api/patient/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "taj": "123456788",
+  "name": "John Doe",
+  "dateOfBirth": "1957-12-24",
+  "email": "johndoe@example.com"
+}
+
+### modify id
+PUT http://localhost:8080/api/patient/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "taj": "037687210",
+  "name": "Jane Doe",
+  "dateOfBirth": "1985-10-18",
+  "email": "janedode@example.com"
+}
+
+### delete id
+DELETE  http://localhost:8080/api/patient/1
+
+### delete all
+DELETE  http://localhost:8080/api/patient/deleteall
