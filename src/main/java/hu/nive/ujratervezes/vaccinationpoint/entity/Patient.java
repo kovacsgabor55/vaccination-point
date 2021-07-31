@@ -24,11 +24,15 @@ public class Patient {
     private String taj;
 
     @NonNull
+    @Column(nullable = false, length = 50)
+    private String name;
+
+    @NonNull
     @Column(nullable = false, name = "date_of_birth")
     private LocalDate dateOfBirth;
 
     @NonNull
-    @Column(name = "e_mail", nullable = false)
+    @Column(name = "e_mail", nullable = false, length = 100)
     private String eMail;
 
     //TODO connection the vaccination entity
@@ -38,7 +42,7 @@ public class Patient {
 
     private int doses;
 
-    @Column(name = "vaccine_type")
+    @Column(name = "vaccine_type", length = 20)
     @Enumerated(EnumType.STRING)
     private Vaccine_type vaccineType;
 }
