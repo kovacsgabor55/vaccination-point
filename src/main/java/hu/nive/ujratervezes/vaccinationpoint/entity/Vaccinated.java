@@ -23,16 +23,16 @@ public class Vaccinated {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "patient_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
     @NonNull
-    @Column(name = "number_series_doses", nullable = false)
+    @Column(name = "number_series_doses", nullable = false, columnDefinition = "int(1)")
     private int numberSeriesDoses;
 
     @NonNull
-    @Column(name = "overall_number_doses", nullable = false)
+    @Column(name = "overall_number_doses", nullable = false, columnDefinition = "int(1)")
     private int overallNumberDoses;
 
     @NonNull

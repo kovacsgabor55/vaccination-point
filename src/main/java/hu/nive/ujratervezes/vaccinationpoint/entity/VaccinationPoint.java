@@ -25,7 +25,7 @@ public class VaccinationPoint {
     @EqualsAndHashCode.Exclude
     @JsonBackReference
     @OneToOne
-    @JoinColumn(name = "patient_id", referencedColumnName = "id")
+    @JoinColumn(name = "patient_id", referencedColumnName = "id", nullable = false)
     private Patient patient;
 
     @NonNull
@@ -37,7 +37,7 @@ public class VaccinationPoint {
     private String address;
 
     @NonNull
-    @Column(name = "vaccine_type", length = 20)
+    @Column(name = "vaccine_type", length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
     private VaccineType vaccineType;
 }

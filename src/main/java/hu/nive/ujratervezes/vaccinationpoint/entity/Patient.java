@@ -23,7 +23,7 @@ public class Patient {
     private Long id;
 
     @NonNull
-    @Column(nullable = false, unique = true, length = 9)
+    @Column(nullable = false, unique = true, length = 9, columnDefinition = "char(9)")
     private String taj;
 
     @NonNull
@@ -47,7 +47,8 @@ public class Patient {
     @Column(name = "last_vaccination_date")
     private LocalDateTime lastVaccinationDate;
 
-    private int doses;
+    @Column(name = "doses", columnDefinition = "int(1) default 0")
+    private int doses = 0;
 
     @Column(name = "vaccine_type", length = 20)
     @Enumerated(EnumType.STRING)
