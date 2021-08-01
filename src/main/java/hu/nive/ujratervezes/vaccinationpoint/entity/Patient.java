@@ -17,6 +17,7 @@ public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @NonNull
@@ -36,6 +37,9 @@ public class Patient {
     private String email;
 
     //TODO connection the vaccination entity
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vaccination_point_id", referencedColumnName = "id")
+    private VaccinationPoint vaccinationPoint;
 
     @Column(name = "last_vaccination_date")
     private LocalDateTime lastVaccinationDate;
