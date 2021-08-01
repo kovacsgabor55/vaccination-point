@@ -1,6 +1,6 @@
 package hu.nive.ujratervezes.vaccinationpoint.pojo.command;
 
-import hu.nive.ujratervezes.vaccinationpoint.Vaccine_type;
+import hu.nive.ujratervezes.vaccinationpoint.VaccineType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +23,5 @@ public class CreateVaccinationPoint {
     private String address;
 
     @Schema(description = "vaccination type of the patient", example = "COMIRNATY")
-    private Vaccine_type vaccineType;
+    private VaccineType vaccineType;
 }

@@ -1,11 +1,13 @@
 package hu.nive.ujratervezes.vaccinationpoint.entity;
 
-import hu.nive.ujratervezes.vaccinationpoint.Vaccine_type;
+import hu.nive.ujratervezes.vaccinationpoint.VaccineType;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -36,10 +38,11 @@ public class Patient {
     @Column(name = "e_mail", nullable = false, length = 100)
     private String email;
 
-    //TODO connection the vaccination entity
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "vaccination_point_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
     private VaccinationPoint vaccinationPoint;
+
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Vaccinated> vaccinateds = new ArrayList<>();
 
     @Column(name = "last_vaccination_date")
     private LocalDateTime lastVaccinationDate;
@@ -48,5 +51,5 @@ public class Patient {
 
     @Column(name = "vaccine_type", length = 20)
     @Enumerated(EnumType.STRING)
-    private Vaccine_type vaccineType;
+    private VaccineType vaccineType;
 }

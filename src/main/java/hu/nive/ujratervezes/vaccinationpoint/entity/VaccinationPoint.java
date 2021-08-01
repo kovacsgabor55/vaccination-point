@@ -1,6 +1,7 @@
 package hu.nive.ujratervezes.vaccinationpoint.entity;
 
-import hu.nive.ujratervezes.vaccinationpoint.Vaccine_type;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import hu.nive.ujratervezes.vaccinationpoint.VaccineType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,8 +21,11 @@ public class VaccinationPoint {
     private Long id;
 
     @NonNull
-    //@Column(name = "patient_id", nullable = false)
-    @OneToOne(mappedBy = "vaccinationPoint")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonBackReference
+    @OneToOne
+    @JoinColumn(name = "patient_id", referencedColumnName = "id")
     private Patient patient;
 
     @NonNull
@@ -35,5 +39,5 @@ public class VaccinationPoint {
     @NonNull
     @Column(name = "vaccine_type", length = 20)
     @Enumerated(EnumType.STRING)
-    private Vaccine_type vaccineType;
+    private VaccineType vaccineType;
 }
