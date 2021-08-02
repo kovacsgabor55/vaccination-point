@@ -1,17 +1,17 @@
 package hu.nive.ujratervezes.vaccinationpoint.service;
 
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreatePatientCommand;
+import hu.nive.ujratervezes.vaccinationpoint.pojo.command.UpdatePatientCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.PatientDto;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class PatientServiceIT {
@@ -21,16 +21,13 @@ class PatientServiceIT {
 
     @BeforeEach
     void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
+        service.deleteAll();
     }
 
     @Test
     void save() {
         String taj = "123456788";
-        String name = "john Doe";
+        String name = "John Doe";
         LocalDate dob = LocalDate.of(1957, 12, 24);
         String email = "johndoe@example.com";
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
@@ -43,21 +40,88 @@ class PatientServiceIT {
 
     @Test
     void listAll() {
+        String taj = "123456788";
+        String taj2 = "037687210";
+        String name = "John Doe";
+        String name2 = "Jane Doe";
+        LocalDate dob = LocalDate.of(1957, 12, 24);
+        LocalDate dob2 = LocalDate.of(1985, 10, 18);
+        String email = "johndoe@example.com";
+        String email2 = "janedode@example.com";
+        CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
+        CreatePatientCommand command2 = new CreatePatientCommand(taj2, name2, dob2, email2);
+        service.save(command);
+        service.save(command2);
+        List<PatientDto> result = service.listAll();
+        assertEquals(2, result.size());
+        assertEquals(taj, result.get(0).getTaj());
+        assertEquals(taj2, result.get(1).getTaj());
+
     }
 
     @Test
     void findById() {
+        String taj = "123456788";
+        String name = "John Doe";
+        LocalDate dob = LocalDate.of(1957, 12, 24);
+        String email = "johndoe@example.com";
+        CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
+        long id = service.save(command).getId();
+        PatientDto result = service.findById(id);
+        assertEquals(name, result.getName());
+        assertEquals(id, result.getId());
     }
 
     @Test
     void updateById() {
+        String taj = "123456788";
+        String name = "John Doe";
+        LocalDate dob = LocalDate.of(1957, 12, 24);
+        String email = "johndoe@example.com";
+        CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
+        long id = service.save(command).getId();
+        String tajMod = "037687210";
+        String nameMod = "Jane Doe";
+        LocalDate dobMod = LocalDate.of(1985, 10, 18);
+        String emailMod = "janedode@example.com";
+        UpdatePatientCommand updateCommand = new UpdatePatientCommand(tajMod, nameMod, dobMod, emailMod);
+
+        PatientDto result = service.updateById(id, updateCommand);
+
+        assertEquals(tajMod, result.getTaj());
+        assertEquals(nameMod, result.getName());
+        assertEquals(dobMod, result.getDateOfBirth());
+        assertEquals(emailMod, result.getEmail());
     }
 
     @Test
     void deleteById() {
+        String taj = "123456788";
+        String taj2 = "037687210";
+        String name = "John Doe";
+        LocalDate dob = LocalDate.of(1957, 12, 24);
+        String email = "johndoe@example.com";
+        CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
+        CreatePatientCommand command2 = new CreatePatientCommand(taj2, name, dob, email);
+        long id = service.save(command).getId();
+        service.save(command2);
+        service.deleteById(id);
+        assertEquals(1, service.listAll().size());
+        assertEquals(taj2, service.listAll().get(0).getTaj());
+
     }
 
     @Test
     void deleteAll() {
+        String taj = "123456788";
+        String taj2 = "037687210";
+        String name = "John Doe";
+        LocalDate dob = LocalDate.of(1957, 12, 24);
+        String email = "johndoe@example.com";
+        CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
+        CreatePatientCommand command2 = new CreatePatientCommand(taj2, name, dob, email);
+        service.save(command2);
+        service.deleteAll();
+        assertEquals(0, service.listAll().size());
     }
 }

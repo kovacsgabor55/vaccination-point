@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateVaccinationPoint {
+public class UpdateVaccinationPointCommand {
 
     @Schema(description = "date of the reservation occasion vaccination", example = "2021-11-12 14:50")
     private LocalDateTime occasion;
