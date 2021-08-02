@@ -2,6 +2,7 @@ package hu.nive.ujratervezes.vaccinationpoint.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import hu.nive.ujratervezes.vaccinationpoint.VaccineAdministered;
+import hu.nive.ujratervezes.vaccinationpoint.VaccineType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,6 +44,11 @@ public class Vaccinated {
     @Column(name = "administered_vaccine", length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
     private VaccineAdministered administered;
+
+    @NonNull
+    @Column(name = "vaccine_type", length = 20)
+    @Enumerated(EnumType.STRING)
+    private VaccineType vaccineType;
 
     @NonNull
     @Column(name = "lot", nullable = false, length = 15)

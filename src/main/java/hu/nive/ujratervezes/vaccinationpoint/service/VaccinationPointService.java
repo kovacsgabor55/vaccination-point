@@ -28,10 +28,10 @@ public class VaccinationPointService {
     @Transactional
     public VaccinationPointDto save(long id, CreateVaccinationPointCommand command) {
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException(id));
-        VaccinationPoint uj = new VaccinationPoint(patient, command.getOccasion(), command.getAddress(), command.getVaccineType());
-        repository.save(uj);
-        patient.setVaccinationPoint(uj);
-        return modelMapper.map(uj, VaccinationPointDto.class);
+        VaccinationPoint newVaccinationPoint = new VaccinationPoint(patient, command.getOccasion(), command.getAddress(), command.getVaccineType());
+        repository.save(newVaccinationPoint);
+        patient.setVaccinationPoint(newVaccinationPoint);
+        return modelMapper.map(newVaccinationPoint, VaccinationPointDto.class);
     }
 
     //TODO exception

@@ -5,7 +5,6 @@ import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreatePatientCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreateVaccinationPointCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.UpdateVaccinationPointCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.VaccinationPointDto;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class VaccinationPointServiceIT {
@@ -40,10 +39,6 @@ class VaccinationPointServiceIT {
         patientId = patientService.save(command).getId();
 
         service.deleteAll();
-    }
-
-    @AfterEach
-    void tearDown() {
     }
 
     @Test

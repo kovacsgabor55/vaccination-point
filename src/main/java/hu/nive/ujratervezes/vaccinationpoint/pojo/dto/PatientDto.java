@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -29,7 +31,9 @@ public class PatientDto {
     @Schema(description = "E-mail of the patient", example = "johndoe@example.com")
     private String email;
 
-    //TODO connection the vaccination dto
+    private VaccinationPointDto vaccinationPoint;
+
+    private List<VaccinatedDto> vaccinateds = new ArrayList<>();
 
     @Schema(description = "last vaccination date of the patient")
     private LocalDateTime lastVaccinationDate;
