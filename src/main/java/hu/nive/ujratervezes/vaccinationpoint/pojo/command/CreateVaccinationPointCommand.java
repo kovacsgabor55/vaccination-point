@@ -16,7 +16,7 @@ public class CreateVaccinationPointCommand {
     @Schema(description = "date of the reservation occasion vaccination", example = "2021-10-12 14:50")
     private LocalDateTime occasion;
 
-    @Schema(description = "address of the vaccination", example = "Miskolc Megyei kórház 2. oltópont")
+    @Schema(description = "address of the vaccination", example = "Miskolc Megyei Kórház 2. oltópont")
     private String address;
 
     @Schema(description = "vaccination type of the patient", example = "COMIRNATY")

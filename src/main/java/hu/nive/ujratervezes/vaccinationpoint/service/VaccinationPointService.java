@@ -4,6 +4,7 @@ import hu.nive.ujratervezes.vaccinationpoint.entity.Patient;
 import hu.nive.ujratervezes.vaccinationpoint.entity.VaccinationPoint;
 import hu.nive.ujratervezes.vaccinationpoint.errorandling.PatientNotFoundException;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreateVaccinationPointCommand;
+import hu.nive.ujratervezes.vaccinationpoint.pojo.command.UpdateVaccinationPointCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.VaccinationPointDto;
 import hu.nive.ujratervezes.vaccinationpoint.repository.PatientRepository;
 import hu.nive.ujratervezes.vaccinationpoint.repository.VaccinationPointRepository;
@@ -23,6 +24,7 @@ public class VaccinationPointService {
 
     private final PatientRepository patientRepository;
 
+    //TODO exception
     @Transactional
     public VaccinationPointDto save(long id, CreateVaccinationPointCommand command) {
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException(id));
@@ -30,5 +32,29 @@ public class VaccinationPointService {
         repository.save(uj);
         patient.setVaccinationPoint(uj);
         return modelMapper.map(uj, VaccinationPointDto.class);
+    }
+
+    //TODO exception
+    @Transactional
+    public VaccinationPointDto updateById(long id, UpdateVaccinationPointCommand command) {
+        VaccinationPoint item = repository.findById(id)
+                .orElseThrow(() -> new PatientNotFoundException(id));
+        item.setOccasion(command.getOccasion());
+        return modelMapper.map(item, VaccinationPointDto.class);
+    }
+
+    //TODO exception
+    public VaccinationPointDto findById(long id) {
+        return modelMapper.map(repository.findById(id)
+                        .orElseThrow(() -> new PatientNotFoundException(id)),
+                VaccinationPointDto.class);
+    }
+
+    public void deleteAll() {
+        repository.deleteAll();
+    }
+
+    public void deleteById(long id) {
+        repository.deleteById(id);
     }
 }

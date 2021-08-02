@@ -31,7 +31,9 @@ class PatientServiceIT {
         LocalDate dob = LocalDate.of(1957, 12, 24);
         String email = "johndoe@example.com";
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
+
         PatientDto result = service.save(command);
+
         assertEquals(taj, result.getTaj());
         assertEquals(name, result.getName());
         assertEquals(dob, result.getDateOfBirth());
@@ -50,9 +52,11 @@ class PatientServiceIT {
         String email2 = "janedode@example.com";
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
         CreatePatientCommand command2 = new CreatePatientCommand(taj2, name2, dob2, email2);
+
         service.save(command);
         service.save(command2);
         List<PatientDto> result = service.listAll();
+
         assertEquals(2, result.size());
         assertEquals(taj, result.get(0).getTaj());
         assertEquals(taj2, result.get(1).getTaj());
@@ -66,8 +70,10 @@ class PatientServiceIT {
         LocalDate dob = LocalDate.of(1957, 12, 24);
         String email = "johndoe@example.com";
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
+
         long id = service.save(command).getId();
         PatientDto result = service.findById(id);
+
         assertEquals(name, result.getName());
         assertEquals(id, result.getId());
     }
@@ -78,14 +84,14 @@ class PatientServiceIT {
         String name = "John Doe";
         LocalDate dob = LocalDate.of(1957, 12, 24);
         String email = "johndoe@example.com";
-        CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
-        long id = service.save(command).getId();
+        CreatePatientCommand createCommand = new CreatePatientCommand(taj, name, dob, email);
         String tajMod = "037687210";
         String nameMod = "Jane Doe";
         LocalDate dobMod = LocalDate.of(1985, 10, 18);
         String emailMod = "janedode@example.com";
         UpdatePatientCommand updateCommand = new UpdatePatientCommand(tajMod, nameMod, dobMod, emailMod);
 
+        long id = service.save(createCommand).getId();
         PatientDto result = service.updateById(id, updateCommand);
 
         assertEquals(tajMod, result.getTaj());
@@ -103,12 +109,13 @@ class PatientServiceIT {
         String email = "johndoe@example.com";
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
         CreatePatientCommand command2 = new CreatePatientCommand(taj2, name, dob, email);
+
         long id = service.save(command).getId();
         service.save(command2);
         service.deleteById(id);
+
         assertEquals(1, service.listAll().size());
         assertEquals(taj2, service.listAll().get(0).getTaj());
-
     }
 
     @Test
@@ -120,8 +127,11 @@ class PatientServiceIT {
         String email = "johndoe@example.com";
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
         CreatePatientCommand command2 = new CreatePatientCommand(taj2, name, dob, email);
+
+        service.save(command);
         service.save(command2);
         service.deleteAll();
+
         assertEquals(0, service.listAll().size());
     }
 }
