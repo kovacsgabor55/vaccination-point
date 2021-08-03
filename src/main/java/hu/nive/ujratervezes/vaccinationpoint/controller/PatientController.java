@@ -41,7 +41,6 @@ public class PatientController {
     @Operation(summary = "creates an patient")
     @ApiResponse(responseCode = "201", description = "patient has been created")
     public PatientDto create(@Valid @RequestBody CreatePatientCommand command) {
-        System.out.println(command.toString());
         return service.save(command);
     }
 

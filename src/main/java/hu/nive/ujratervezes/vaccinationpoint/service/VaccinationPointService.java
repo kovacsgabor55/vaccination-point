@@ -5,6 +5,7 @@ import hu.nive.ujratervezes.vaccinationpoint.entity.VaccinationPoint;
 import hu.nive.ujratervezes.vaccinationpoint.errorandling.PatientNotFoundException;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreateVaccinationPointCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.UpdateVaccinationPointCommand;
+import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.PatientDto;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.VaccinationPointDto;
 import hu.nive.ujratervezes.vaccinationpoint.repository.PatientRepository;
 import hu.nive.ujratervezes.vaccinationpoint.repository.VaccinationPointRepository;
@@ -13,6 +14,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -56,5 +59,10 @@ public class VaccinationPointService {
 
     public void deleteById(long id) {
         repository.deleteById(id);
+    }
+
+    public List<VaccinationPointDto> listAll() {
+        return repository.findAll().stream().map(item -> modelMapper.map(item, VaccinationPointDto.class))
+                .collect(Collectors.toList());
     }
 }
