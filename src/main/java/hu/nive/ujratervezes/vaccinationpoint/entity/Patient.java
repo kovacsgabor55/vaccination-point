@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
 @Table(name = "patients")

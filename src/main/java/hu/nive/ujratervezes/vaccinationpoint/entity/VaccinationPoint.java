@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
 @Table(name = "vaccination_points")

@@ -2,7 +2,6 @@ package hu.nive.ujratervezes.vaccinationpoint.pojo.dto;
 
 import hu.nive.ujratervezes.vaccinationpoint.VaccineType;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +12,6 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class PatientDto {
 
     @Schema(description = "unique identifier of the patient", example = "1")
