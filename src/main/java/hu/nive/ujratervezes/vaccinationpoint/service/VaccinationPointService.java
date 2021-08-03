@@ -5,7 +5,6 @@ import hu.nive.ujratervezes.vaccinationpoint.entity.VaccinationPoint;
 import hu.nive.ujratervezes.vaccinationpoint.errorandling.PatientNotFoundException;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreateVaccinationPointCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.UpdateVaccinationPointCommand;
-import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.PatientDto;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.VaccinationPointDto;
 import hu.nive.ujratervezes.vaccinationpoint.repository.PatientRepository;
 import hu.nive.ujratervezes.vaccinationpoint.repository.VaccinationPointRepository;
