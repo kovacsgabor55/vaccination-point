@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class UpdateVaccinationPointCommand {
 
+    @NotNull
     @Schema(description = "date of the reservation occasion vaccination", example = "2021-11-12 14:50")
     private LocalDateTime occasion;
 }
