@@ -4,7 +4,7 @@ import hu.nive.ujratervezes.vaccinationpoint.VaccineType;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreatePatientCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreateVaccinationPointCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.UpdateVaccinationPointCommand;
-import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.VaccinationPointDto;
+import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.VaccinationPointDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,7 @@ class VaccinationPointServiceIT {
         VaccineType vaccineType = VaccineType.COMIRNATY;
         CreateVaccinationPointCommand command = new CreateVaccinationPointCommand(occasion, address, vaccineType);
 
-        VaccinationPointDto result = service.save(patientId, command);
+        VaccinationPointDTO result = service.save(patientId, command);
 
         assertEquals(occasion, result.getOccasion());
         assertEquals(address, result.getAddress());
@@ -66,7 +66,7 @@ class VaccinationPointServiceIT {
         UpdateVaccinationPointCommand updateCommand = new UpdateVaccinationPointCommand(newOccasion);
 
         long id = service.save(patientId, createCommand).getId();
-        VaccinationPointDto result = service.updateById(id, updateCommand);
+        VaccinationPointDTO result = service.updateById(id, updateCommand);
 
         assertEquals(newOccasion, result.getOccasion());
         assertEquals(address, result.getAddress());

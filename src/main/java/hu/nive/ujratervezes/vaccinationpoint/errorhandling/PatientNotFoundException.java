@@ -1,4 +1,4 @@
-package hu.nive.ujratervezes.vaccinationpoint.errorandling;
+package hu.nive.ujratervezes.vaccinationpoint.errorhandling;
 
 import org.zalando.problem.AbstractThrowableProblem;
 import org.zalando.problem.Status;

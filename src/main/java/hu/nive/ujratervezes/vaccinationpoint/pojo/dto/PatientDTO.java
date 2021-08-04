@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class PatientDto {
+public class PatientDTO {
 
     @Schema(description = "unique identifier of the patient", example = "1")
     private Long id;
@@ -29,9 +29,9 @@ public class PatientDto {
     @Schema(description = "E-mail of the patient", example = "johndoe@example.com")
     private String email;
 
-    private VaccinationPointDto vaccinationPoint;
+    private VaccinationPointDTO vaccinationPoint;
 
-    private List<VaccinatedDto> vaccinateds = new ArrayList<>();
+    private List<VaccinatedDTO> vaccinateds = new ArrayList<>();
 
     @Schema(description = "last vaccination date of the patient")
     private LocalDateTime lastVaccinationDate;

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class VaccinatedDto {
+public class VaccinatedDTO {
 
     @Schema(description = "unique identifier of the vaccinated", example = "1")
     private Long id;

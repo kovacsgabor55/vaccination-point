@@ -2,7 +2,7 @@ package hu.nive.ujratervezes.vaccinationpoint.controller;
 
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreateVaccinationPointCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.UpdateVaccinationPointCommand;
-import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.VaccinationPointDto;
+import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.VaccinationPointDTO;
 import hu.nive.ujratervezes.vaccinationpoint.service.VaccinationPointService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,14 +25,14 @@ public class VaccinationPointController {
     @GetMapping("all")
     @Operation(summary = "list all vaccination points")
     @ApiResponse(responseCode = "200", description = "vaccination points has been listed")
-    public List<VaccinationPointDto> get() {
+    public List<VaccinationPointDTO> get() {
         return service.listAll();
     }
 
     @GetMapping("{id}")
     @Operation(summary = "find an vaccination point by id")
     @ApiResponse(responseCode = "200", description = "vaccination point has been found")
-    public VaccinationPointDto findById(@PathVariable("id") long id) {
+    public VaccinationPointDTO findById(@PathVariable("id") long id) {
         return service.findById(id);
     }
 
@@ -41,7 +41,7 @@ public class VaccinationPointController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "creates an vaccination point by patient id")
     @ApiResponse(responseCode = "201", description = "vaccination point has been created")
-    public VaccinationPointDto create(@PathVariable("id") long id,@Valid @RequestBody CreateVaccinationPointCommand command) {
+    public VaccinationPointDTO create(@PathVariable("id") long id, @Valid @RequestBody CreateVaccinationPointCommand command) {
         return service.save(id,command);
     }
 
@@ -49,7 +49,7 @@ public class VaccinationPointController {
     @PutMapping("{id}")
     @Operation(summary = "modify an vaccination point")
     @ApiResponse(responseCode = "200", description = "vaccination point has been modified")
-    public VaccinationPointDto update(@PathVariable("id") int id, @Valid @RequestBody UpdateVaccinationPointCommand command) {
+    public VaccinationPointDTO update(@PathVariable("id") int id, @Valid @RequestBody UpdateVaccinationPointCommand command) {
         return service.updateById(id, command);
     }
 

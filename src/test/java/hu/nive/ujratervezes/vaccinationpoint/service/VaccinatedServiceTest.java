@@ -5,7 +5,7 @@ import hu.nive.ujratervezes.vaccinationpoint.VaccineType;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreatePatientCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreateVaccinatedCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreateVaccinationPointCommand;
-import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.VaccinatedDto;
+import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.VaccinatedDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +65,7 @@ class VaccinatedServiceTest {
         LocalDateTime nextVaccinationDate = LocalDateTime.of(2021, 11, 24, 16, 50);
         CreateVaccinatedCommand command = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
 
-        VaccinatedDto result = service.save(patientId, command);
+        VaccinatedDTO result = service.save(patientId, command);
 
         assertEquals(numberSeriesDoses, result.getNumberSeriesDoses());
         assertEquals(overallNumberDoses, result.getOverallNumberDoses());
@@ -93,7 +93,7 @@ class VaccinatedServiceTest {
         LocalDateTime nextVaccinationDate = null;
         CreateVaccinatedCommand command = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
 
-        VaccinatedDto result = service.save(patientId, command);
+        VaccinatedDTO result = service.save(patientId, command);
 
         assertEquals(numberSeriesDoses, result.getNumberSeriesDoses());
         assertEquals(overallNumberDoses, result.getOverallNumberDoses());

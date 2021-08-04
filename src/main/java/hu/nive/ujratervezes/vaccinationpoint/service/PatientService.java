@@ -1,10 +1,10 @@
 package hu.nive.ujratervezes.vaccinationpoint.service;
 
 import hu.nive.ujratervezes.vaccinationpoint.entity.Patient;
-import hu.nive.ujratervezes.vaccinationpoint.errorandling.PatientNotFoundException;
+import hu.nive.ujratervezes.vaccinationpoint.errorhandling.PatientNotFoundException;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreatePatientCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.UpdatePatientCommand;
-import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.PatientDto;
+import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.PatientDTO;
 import hu.nive.ujratervezes.vaccinationpoint.repository.PatientRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,32 +22,32 @@ public class PatientService {
 
     private final PatientRepository repository;
 
-    public PatientDto save(CreatePatientCommand command) {
+    public PatientDTO save(CreatePatientCommand command) {
         Patient item = new Patient(command.getTaj(), command.getName(), command.getDateOfBirth(), command.getEmail());
         repository.save(item);
-        return modelMapper.map(item, PatientDto.class);
+        return modelMapper.map(item, PatientDTO.class);
     }
 
-    public List<PatientDto> listAll() {
-        return repository.findAll().stream().map(item -> modelMapper.map(item, PatientDto.class))
+    public List<PatientDTO> listAll() {
+        return repository.findAll().stream().map(item -> modelMapper.map(item, PatientDTO.class))
                 .collect(Collectors.toList());
     }
 
-    public PatientDto findById(long id) {
+    public PatientDTO findById(long id) {
         return modelMapper.map(repository.findById(id)
                         .orElseThrow(() -> new PatientNotFoundException(id)),
-                PatientDto.class);
+                PatientDTO.class);
     }
 
     @Transactional
-    public PatientDto updateById(long id, UpdatePatientCommand command) {
+    public PatientDTO updateById(long id, UpdatePatientCommand command) {
         Patient item = repository.findById(id)
                 .orElseThrow(() -> new PatientNotFoundException(id));
         item.setTaj(command.getTaj());
         item.setName(command.getName());
         item.setDateOfBirth(command.getDateOfBirth());
         item.setEmail(command.getEmail());
-        return modelMapper.map(item, PatientDto.class);
+        return modelMapper.map(item, PatientDTO.class);
     }
 
     public void deleteById(long id) {

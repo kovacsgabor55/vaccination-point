@@ -2,7 +2,7 @@ package hu.nive.ujratervezes.vaccinationpoint.service;
 
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreatePatientCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.UpdatePatientCommand;
-import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.PatientDto;
+import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.PatientDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ class PatientServiceIT {
         String email = "johndoe@example.com";
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
 
-        PatientDto result = service.save(command);
+        PatientDTO result = service.save(command);
 
         assertEquals(taj, result.getTaj());
         assertEquals(name, result.getName());
@@ -55,7 +55,7 @@ class PatientServiceIT {
 
         service.save(command);
         service.save(command2);
-        List<PatientDto> result = service.listAll();
+        List<PatientDTO> result = service.listAll();
 
         assertEquals(2, result.size());
         assertEquals(taj, result.get(0).getTaj());
@@ -72,7 +72,7 @@ class PatientServiceIT {
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
 
         long id = service.save(command).getId();
-        PatientDto result = service.findById(id);
+        PatientDTO result = service.findById(id);
 
         assertEquals(name, result.getName());
         assertEquals(id, result.getId());
@@ -92,7 +92,7 @@ class PatientServiceIT {
         UpdatePatientCommand updateCommand = new UpdatePatientCommand(tajMod, nameMod, dobMod, emailMod);
 
         long id = service.save(createCommand).getId();
-        PatientDto result = service.updateById(id, updateCommand);
+        PatientDTO result = service.updateById(id, updateCommand);
 
         assertEquals(tajMod, result.getTaj());
         assertEquals(nameMod, result.getName());

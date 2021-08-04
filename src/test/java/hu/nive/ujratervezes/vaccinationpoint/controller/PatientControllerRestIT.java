@@ -2,7 +2,7 @@ package hu.nive.ujratervezes.vaccinationpoint.controller;
 
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.CreatePatientCommand;
 import hu.nive.ujratervezes.vaccinationpoint.pojo.command.UpdatePatientCommand;
-import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.PatientDto;
+import hu.nive.ujratervezes.vaccinationpoint.pojo.dto.PatientDTO;
 import hu.nive.ujratervezes.vaccinationpoint.repository.PatientRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,21 +41,21 @@ class PatientControllerRestIT {
     void get() {
         template.postForObject("/api/patient/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
-                PatientDto.class);
+                PatientDTO.class);
 
         template.postForObject("/api/patient/",
                 new CreatePatientCommand("037687210", "Jane Doe", LocalDate.of(1985, 10, 18), "janedoe@example.com"),
-                PatientDto.class);
+                PatientDTO.class);
 
-        List<PatientDto> result = template.exchange(
+        List<PatientDTO> result = template.exchange(
                 "/api/patient/all/",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<PatientDto>>() {
+                new ParameterizedTypeReference<List<PatientDTO>>() {
                 }).getBody();
 
         assertThat(result)
-                .extracting(PatientDto::getTaj)
+                .extracting(PatientDTO::getTaj)
                 .containsExactly("123456788", "037687210");
     }
 
@@ -63,17 +63,17 @@ class PatientControllerRestIT {
     void findById() {
         long id = template.postForObject("/api/patient/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
-                PatientDto.class).getId();
+                PatientDTO.class).getId();
 
         template.postForObject("/api/patient/",
                 new CreatePatientCommand("037687210", "Jane Doe", LocalDate.of(1985, 10, 18), "janedoe@example.com"),
-                PatientDto.class);
+                PatientDTO.class);
 
-        PatientDto result = template.exchange(
+        PatientDTO result = template.exchange(
                 "/api/patient/" + id,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<PatientDto>() {
+                new ParameterizedTypeReference<PatientDTO>() {
                 }).getBody();
 
         assertEquals(id, result.getId());
@@ -81,9 +81,9 @@ class PatientControllerRestIT {
 
     @Test
     void createNewPatient() {
-        PatientDto result = template.postForObject("/api/patient/",
+        PatientDTO result = template.postForObject("/api/patient/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
-                PatientDto.class);
+                PatientDTO.class);
 
         assertEquals("123456788", result.getTaj());
         assertEquals("John Doe", result.getName());
@@ -95,16 +95,16 @@ class PatientControllerRestIT {
     void update() {
         long id = template.postForObject("/api/patient/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
-                PatientDto.class).getId();
+                PatientDTO.class).getId();
 
         template.put("/api/patient/" + id,
                 new UpdatePatientCommand("037687210", "Jane Doe", LocalDate.of(1985, 10, 18), "janedoe@example.com"));
 
-        List<PatientDto> result = template.exchange(
+        List<PatientDTO> result = template.exchange(
                 "/api/patient/all/",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<PatientDto>>() {
+                new ParameterizedTypeReference<List<PatientDTO>>() {
                 }).getBody();
 
 
@@ -115,28 +115,28 @@ class PatientControllerRestIT {
     void delete() {
         long id = template.postForObject("/api/patient/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
-                PatientDto.class).getId();
+                PatientDTO.class).getId();
 
         template.postForObject("/api/patient/",
                 new CreatePatientCommand("037687210", "Jane Doe", LocalDate.of(1985, 10, 18), "janedoe@example.com"),
-                PatientDto.class);
+                PatientDTO.class);
 
         template.exchange(
                 "/api/patient/" + id,
                 HttpMethod.DELETE,
                 null,
-                new ParameterizedTypeReference<PatientDto>() {
+                new ParameterizedTypeReference<PatientDTO>() {
                 }).getBody();
 
-        List<PatientDto> result = template.exchange(
+        List<PatientDTO> result = template.exchange(
                 "/api/patient/all/",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<PatientDto>>() {
+                new ParameterizedTypeReference<List<PatientDTO>>() {
                 }).getBody();
 
         assertThat(result)
-                .extracting(PatientDto::getTaj)
+                .extracting(PatientDTO::getTaj)
                 .containsExactly("037687210")
                 .doesNotContainSequence("123456788");
     }
@@ -145,28 +145,28 @@ class PatientControllerRestIT {
     void deleteAll() {
         template.postForObject("/api/patient/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
-                PatientDto.class);
+                PatientDTO.class);
 
         template.postForObject("/api/patient/",
                 new CreatePatientCommand("037687210", "Jane Doe", LocalDate.of(1985, 10, 18), "janedoe@example.com"),
-                PatientDto.class);
+                PatientDTO.class);
 
         template.exchange(
                 "/api/patient/deleteall",
                 HttpMethod.DELETE,
                 null,
-                new ParameterizedTypeReference<PatientDto>() {
+                new ParameterizedTypeReference<PatientDTO>() {
                 }).getBody();
 
-        List<PatientDto> result = template.exchange(
+        List<PatientDTO> result = template.exchange(
                 "/api/patient/all/",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<PatientDto>>() {
+                new ParameterizedTypeReference<List<PatientDTO>>() {
                 }).getBody();
 
         assertThat(result)
-                .extracting(PatientDto::getTaj)
+                .extracting(PatientDTO::getTaj)
                 .doesNotContainSequence("037687210", "123456788");
         assertEquals(0, result.size());
     }
