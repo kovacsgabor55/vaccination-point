@@ -237,7 +237,6 @@ class VaccinationPointEventControllerRestIT {
                 new CreateVaccinationPointEventCommand(occasion2, address2, vaccineType2),
                 VaccinationPointEventDTO.class);
 
-
         template.exchange(
                 "/api/vaccinationpointevent/deleteall",
                 HttpMethod.DELETE,

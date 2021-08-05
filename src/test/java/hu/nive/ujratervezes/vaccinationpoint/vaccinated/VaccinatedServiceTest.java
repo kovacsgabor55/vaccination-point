@@ -2,16 +2,11 @@ package hu.nive.ujratervezes.vaccinationpoint.vaccinated;
 
 import hu.nive.ujratervezes.vaccinationpoint.VaccineAdministered;
 import hu.nive.ujratervezes.vaccinationpoint.VaccineType;
-import hu.nive.ujratervezes.vaccinationpoint.patient.*;
-import hu.nive.ujratervezes.vaccinationpoint.vaccinationpointevent.CreateVaccinationPointEventCommand;
-import hu.nive.ujratervezes.vaccinationpoint.vaccinationpointevent.VaccinationPointEventService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,41 +16,17 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
 @Sql(statements = {
-        "delete from vaccinateds",
-        "delete from vaccination_point_events",
-        "delete from patients"})
+        "delete from `vaccinateds`",
+        "delete from `vaccination_point_events`",
+        "delete from `patients`",
+        "insert into `patients` (`id`, `date_of_birth`, `doses`, `e_mail`, `last_vaccination_date`, `name`, `taj`, `vaccine_type`) values (1, '1957-12-24', 1, 'johndoe@example.com', null, 'John Doe', '123456788', null)",
+        "insert into `vaccination_point_events` (`id`, `address`, `occasion`, `patient_id`, `vaccine_type`) values (1, 'Miskolc Megyei Kórház 2. oltópont', NOW(), 1, 'COMIRNATY')"})
 class VaccinatedServiceTest {
 
     @Autowired
     private VaccinatedService service;
 
-    @Autowired
-    private VaccinationPointEventService vaccinationPointEventService;
-
-
-    @Autowired
-    private PatientService patientService;
-
-    private long patientId = 0;
-
-    @BeforeEach
-    void setUp() {
-        String taj = "123456788";
-        String name = "john Doe";
-        LocalDate dob = LocalDate.of(1957, 12, 24);
-        String email = "johndoe@example.com";
-
-        CreatePatientCommand createPatientCommand = new CreatePatientCommand(taj, name, dob, email);
-
-        patientId = patientService.save(createPatientCommand).getId();
-
-        LocalDateTime occasion = LocalDateTime.of(2021, 10, 12, 14, 50);
-        String address = "Miskolc Megyei Kórház 2. oltópont";
-        VaccineType vaccineType = VaccineType.COMIRNATY;
-        CreateVaccinationPointEventCommand createVaccinationPointEventCommand = new CreateVaccinationPointEventCommand(occasion, address, vaccineType);
-
-        vaccinationPointEventService.save(patientId, createVaccinationPointEventCommand);
-    }
+    private final long patientId = 1;
 
     @Test
     void save() {
@@ -289,8 +260,8 @@ class VaccinatedServiceTest {
         CreateVaccinatedCommand createCommand = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
         CreateVaccinatedCommand createCommand2 = new CreateVaccinatedCommand(numberSeriesDoses2, overallNumberDoses, dateOfVaccination2, administered2, vaccineType2, lot2, nextVaccination2, nextVaccinationDate2);
 
-        service.save(patientId, createCommand).getId();
-        service.save(patientId, createCommand2).getId();
+        service.save(patientId, createCommand);
+        service.save(patientId, createCommand2);
 
         service.deleteAll();
 

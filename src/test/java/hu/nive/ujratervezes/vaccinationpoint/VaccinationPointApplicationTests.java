@@ -8,6 +8,7 @@ class VaccinationPointApplicationTests {
 
     @Test
     void contextLoads() {
+        String[] args = new String[0];
+        VaccinationPointApplication.main(args);
     }
-
 }
