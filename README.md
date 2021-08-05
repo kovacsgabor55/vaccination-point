@@ -16,18 +16,19 @@ Open API url: [/v3/api-docs]( http://localhost:8080/v3/api-docs)
 
 A következő végpontokon érjük el az entitást
 
-| Http metódus | Vég pont                    | Leírás                           | Szerepkör      |
-| ------------ | --------------------------- | -------------------------------- | -------------- |
-| GET          | `"/api/patient/all"`        | lekérdezi az összes pácienst     | oltóorvos      |
-| GET          | `"/api/patient/{id}"`       | lekérdez egy pácienst id alapján | oltóorvos      |
-| POST         | `"/api/patient/"`           | létrehoz egy pácienst            | páciens        |
-| PUT          | `"/api/patient/{id}"`       | módosít egy pácienst id alapján  | adminisztrátor |
-| DELETE       | `"/api/patient/{id}"`       | töröl egy pácienst id alapján    | adminisztrátor |
-| DELETE       | `"/api/patient/delete/all"` | törli az összes pácienst         | adminisztrátor |
+| Http metódus | Vég pont                    | Leírás                                 | Szerepkör      |
+| ------------ | --------------------------- | -------------------------------------- | -------------- |
+| GET          | `"/api/patient/all"`        | lekérdezi az összes pácienst           | oltóorvos      |
+| GET          | `"/api/patient/{id}"`       | lekérdez egy pácienst id alapján       | oltóorvos      |
+| GET          | `"/api/patient/taj/{taj}"`  | lekérdez egy pácienst taj szám alapján | oltóorvos      |
+| POST         | `"/api/patient/"`           | létrehoz egy pácienst                  | páciens        |
+| PUT          | `"/api/patient/{id}"`       | módosít egy pácienst id alapján        | adminisztrátor |
+| DELETE       | `"/api/patient/{id}"`       | töröl egy pácienst id alapján          | adminisztrátor |
+| DELETE       | `"/api/patient/delete/all"` | törli az összes pácienst               | adminisztrátor |
 
 ### Vaccinated
 
-A `Patient` és a `Vaccinated` entitás között Kétirányú `@OneToMany`-`@ManyToOne` kapcsolat van.
+A `Patient` és a `Vaccinated` entitás között egyirányú `@OneToMany`-`@ManyToOne` kapcsolat van.
 
 A következő végpontokon érjük el az entitást
 

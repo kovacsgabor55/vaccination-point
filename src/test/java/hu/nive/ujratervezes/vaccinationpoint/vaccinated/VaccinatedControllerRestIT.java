@@ -10,7 +10,10 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.jdbc.Sql;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -257,5 +260,13 @@ class VaccinatedControllerRestIT {
                 }).getBody();
 
         assertEquals(0, result.size());
+    }
+
+    @Test
+    void notFoundVaccinatedByIdTest() {
+        Problem result = template.getForObject("/api/vaccinated/1", Problem.class);
+
+        assertEquals(URI.create("vaccinateds/not-found"), result.getType());
+        assertEquals(Status.NOT_FOUND, result.getStatus());
     }
 }

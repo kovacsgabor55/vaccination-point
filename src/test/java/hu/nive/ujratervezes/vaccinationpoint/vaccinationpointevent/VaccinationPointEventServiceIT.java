@@ -28,7 +28,7 @@ class VaccinationPointEventServiceIT {
     private final long patientId2 = 2;
 
     @Test
-    void save() {
+    void create() {
         LocalDateTime occasion = LocalDateTime.of(2021, 10, 12, 14, 50);
         String address = "Miskolc Megyei Kórház 2. oltópont";
         VaccineType vaccineType = VaccineType.COMIRNATY;

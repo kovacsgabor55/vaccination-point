@@ -27,6 +27,12 @@ public class PatientService {
                 PatientDTO.class);
     }
 
+    public PatientDTO findByTaj(String taj) {
+        return modelMapper.map(repository.findByTaj(taj)
+                        .orElseThrow(() -> new PatientNotFoundException(taj)),
+                PatientDTO.class);
+    }
+
     public PatientDTO create(CreatePatientCommand command) {
         Patient item = new Patient(command.getTaj(), command.getName(), command.getDateOfBirth(), command.getEmail());
         repository.save(item);

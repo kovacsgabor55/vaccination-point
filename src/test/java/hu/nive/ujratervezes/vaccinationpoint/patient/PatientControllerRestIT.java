@@ -34,7 +34,7 @@ class PatientControllerRestIT {
     }
 
     @Test
-    void get() {
+    void listAll() {
         template.postForObject("/api/patient/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
                 PatientDTO.class);
@@ -67,6 +67,26 @@ class PatientControllerRestIT {
 
         PatientDTO result = template.exchange(
                 "/api/patient/" + id,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<PatientDTO>() {
+                }).getBody();
+
+        assertEquals(id, result.getId());
+    }
+
+    @Test
+    void findByTaj() {
+        long id = template.postForObject("/api/patient/",
+                new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
+                PatientDTO.class).getId();
+
+        template.postForObject("/api/patient/",
+                new CreatePatientCommand("037687210", "Jane Doe", LocalDate.of(1985, 10, 18), "janedoe@example.com"),
+                PatientDTO.class);
+
+        PatientDTO result = template.exchange(
+                "/api/patient/taj/123456788",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<PatientDTO>() {
@@ -169,8 +189,16 @@ class PatientControllerRestIT {
     }
 
     @Test
-    void notFoundPatientTest() {
+    void notFoundPatientByIdTest() {
         Problem result = template.getForObject("/api/patient/1", Problem.class);
+
+        assertEquals(URI.create("patients/not-found"), result.getType());
+        assertEquals(Status.NOT_FOUND, result.getStatus());
+    }
+
+    @Test
+    void notFoundPatientByTajTest() {
+        Problem result = template.getForObject("/api/patient/taj/037687210", Problem.class);
 
         assertEquals(URI.create("patients/not-found"), result.getType());
         assertEquals(Status.NOT_FOUND, result.getStatus());

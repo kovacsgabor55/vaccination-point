@@ -32,6 +32,13 @@ public class PatientController {
         return service.findById(id);
     }
 
+    @GetMapping("taj/{taj}")
+    @Operation(summary = "find an patient by taj")
+    @ApiResponse(responseCode = "200", description = "patient has been found")
+    public PatientDTO findById(@PathVariable("taj") String taj) {
+        return service.findByTaj(taj);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "creates an patient")

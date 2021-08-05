@@ -21,7 +21,7 @@ class PatientServiceIT {
     private PatientService service;
 
     @Test
-    void save() {
+    void create() {
         String taj = "123456788";
         String name = "John Doe";
         LocalDate dob = LocalDate.of(1957, 12, 24);
@@ -69,6 +69,21 @@ class PatientServiceIT {
 
         long id = service.create(command).getId();
         PatientDTO result = service.findById(id);
+
+        assertEquals(name, result.getName());
+        assertEquals(id, result.getId());
+    }
+
+    @Test
+    void findByTaj() {
+        String taj = "123456788";
+        String name = "John Doe";
+        LocalDate dob = LocalDate.of(1957, 12, 24);
+        String email = "johndoe@example.com";
+        CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
+
+        long id = service.create(command).getId();
+        PatientDTO result = service.findByTaj(taj);
 
         assertEquals(name, result.getName());
         assertEquals(id, result.getId());

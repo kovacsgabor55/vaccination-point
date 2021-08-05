@@ -29,7 +29,7 @@ class VaccinatedServiceTest {
     private final long patientId = 1;
 
     @Test
-    void save() {
+    void create() {
         int numberSeriesDoses = 1;
         int overallNumberDoses = 2;
         LocalDateTime dateOfVaccination = LocalDateTime.of(2020, 8, 24, 16, 50);
