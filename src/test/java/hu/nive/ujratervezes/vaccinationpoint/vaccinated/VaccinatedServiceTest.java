@@ -65,7 +65,7 @@ class VaccinatedServiceTest {
         VaccineType vaccineType = VaccineType.JANSSEN;
         String lot = "ZHG433DS";
         boolean nextVaccination = false;
-        LocalDateTime nextVaccinationDate = null;
+        LocalDateTime nextVaccinationDate = LocalDateTime.of(2021, 11, 24, 16, 50);
         CreateVaccinatedCommand command = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
 
         VaccinatedDTO result = service.save(patientId, command);

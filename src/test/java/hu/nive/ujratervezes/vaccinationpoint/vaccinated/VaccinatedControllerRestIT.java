@@ -74,7 +74,6 @@ class VaccinatedControllerRestIT {
                 .containsExactly(id, id2);
     }
 
-    //TODO bug
     @Test
     void findById() {
         int numberSeriesDoses = 1;
@@ -84,7 +83,7 @@ class VaccinatedControllerRestIT {
         VaccineType vaccineType = VaccineType.CURE_VAC;
         String lot = "Tgde45gf";
         boolean nextVaccination = false;
-        LocalDateTime nextVaccinationDate = null;
+        LocalDateTime nextVaccinationDate = LocalDateTime.of(2021, 11, 24, 16, 50);
 
         long id = template.postForObject("/api/vaccinated/" + patientId,
                 new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate),
