@@ -1,7 +1,20 @@
-swagger url : http://localhost:8080/docs/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config
-api docs url : http://localhost:8080/v3/api-docs
+# Vizsgaremek - Vaccination point administered system
 
+Ezen alkalmazás segítségével lehetőségünk van egy oltási procedúrát adminisztrálni.
 
+A pácienseknek van lehetőségük regisztrálni és oltásra időpontot foglalni.
+
+A kezelő orvos be tudja jegyezni a páciensnek az oltást és lehetősége van új időpontot adnia a következő oltáshoz.
+
+## Használata
+
+Swagger UI url: [/docs/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config](http://localhost:8080/docs/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config)
+
+Open API url: [/v3/api-docs]( http://localhost:8080/v3/api-docs)
+
+### Patient
+
+A következő végpontokon érjük el az entitást
 
 | Http metódus | Vég pont                    | Leírás                           | Szerepkör      |
 | ------------ | --------------------------- | -------------------------------- | -------------- |
@@ -12,6 +25,11 @@ api docs url : http://localhost:8080/v3/api-docs
 | DELETE       | `"/api/patient/{id}"`       | töröl egy pácienst id alapján    | adminisztrátor |
 | DELETE       | `"/api/patient/delete/all"` | törli az összes pácienst         | adminisztrátor |
 
+### Vaccinated
+
+A `Patient` és a `Vaccinated` entitás között Kétirányú `@OneToMany`-`@ManyToOne` kapcsolat van.
+
+A következő végpontokon érjük el az entitást
 
 | Http metódus | Vég pont                                | Leírás                                           | Szerepkör      |
 | ------------ | --------------------------------------- | ------------------------------------------------ | -------------- |
@@ -22,6 +40,12 @@ api docs url : http://localhost:8080/v3/api-docs
 | DELETE       | `"/api/vaccinated/{id}"`                | töröl egy oltást id alapján                      | oltóorvos      |
 | DELETE       | `"/api/vaccinated/delete/all"`          | törli az összes oltást                           | adminisztrátor |
 
+### Vaccination Point Event
+
+A `Patient` és a `VaccinationPointEvent` entitás között egyirányú `@OneToOne` kapcsolat van.
+
+A következő végpontokon érjük el az entitást
+
 | Http metódus | Vég pont                                           | Leírás                                             | Szerepkör      |
 | ------------ | -------------------------------------------------- | -------------------------------------------------- | -------------- |
 | GET          | `"/api/vaccinationpointevent/all"`                 | lekérdezi az összes eseményt                       | oltóorvos      |
@@ -30,4 +54,3 @@ api docs url : http://localhost:8080/v3/api-docs
 | PUT          | `"/api/vaccinationpointevent/{id}"`                | módosít egy eseményt id alapján                    | oltóorvos      |
 | DELETE       | `"/api/vaccinationpointevent/{id}"`                | töröl egy eseményt id alapján                      | oltóorvos      |
 | DELETE       | `"/api/vaccinationpointevent/delete/all"`          | törli az összes eseményt                           | adminisztrátor |
-
