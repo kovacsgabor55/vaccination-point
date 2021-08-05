@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.test.context.jdbc.Sql;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
@@ -18,19 +19,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Sql(statements = {
+        "delete from vaccinateds",
+        "delete from vaccination_point_events",
+        "delete from patients"})
 class PatientControllerRestIT {
 
     @Autowired
     TestRestTemplate template;
 
-    @Autowired
-    PatientRepository repository;
-
     @BeforeEach
     void init() {
-        repository.deleteAll();
         template.delete("/api/patient");
-
     }
 
     @Test
@@ -135,6 +135,7 @@ class PatientControllerRestIT {
                 .extracting(PatientDTO::getTaj)
                 .containsExactly("037687210")
                 .doesNotContainSequence("123456788");
+        assertEquals(1, result.size());
     }
 
     @Test

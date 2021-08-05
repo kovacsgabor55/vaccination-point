@@ -33,12 +33,12 @@ public class VaccinationPointEventController {
     }
 
     //TODO validation
-    @PostMapping("{id}")
+    @PostMapping("{patientId}")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "creates an vaccination point event by patient id")
     @ApiResponse(responseCode = "201", description = "vaccination point event has been created")
-    public VaccinationPointEventDTO create(@PathVariable("id") long id, @Valid @RequestBody CreateVaccinationPointEventCommand command) {
-        return service.save(id,command);
+    public VaccinationPointEventDTO create(@PathVariable("patientId") long patientId, @Valid @RequestBody CreateVaccinationPointEventCommand command) {
+        return service.save(patientId,command);
     }
 
     //TODO validation

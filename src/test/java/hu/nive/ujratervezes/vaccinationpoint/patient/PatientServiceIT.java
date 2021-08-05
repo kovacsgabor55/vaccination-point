@@ -1,9 +1,9 @@
 package hu.nive.ujratervezes.vaccinationpoint.patient;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,15 +11,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
+@Sql(statements = {
+        "delete from vaccinateds",
+        "delete from vaccination_point_events",
+        "delete from patients"})
 class PatientServiceIT {
 
     @Autowired
     private PatientService service;
-
-    @BeforeEach
-    void setUp() {
-        service.deleteAll();
-    }
 
     @Test
     void save() {
@@ -46,7 +45,7 @@ class PatientServiceIT {
         LocalDate dob = LocalDate.of(1957, 12, 24);
         LocalDate dob2 = LocalDate.of(1985, 10, 18);
         String email = "johndoe@example.com";
-        String email2 = "janedode@example.com";
+        String email2 = "janedoe@example.com";
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
         CreatePatientCommand command2 = new CreatePatientCommand(taj2, name2, dob2, email2);
 

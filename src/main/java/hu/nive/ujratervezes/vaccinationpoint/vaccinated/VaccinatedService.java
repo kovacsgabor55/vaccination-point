@@ -50,9 +50,15 @@ public class VaccinatedService {
     //TODO exception
     @Transactional
     public VaccinatedDTO updateById(long id, UpdateVaccinatedCommand command) {
-
         Vaccinated vaccinated = repository.findById(id).orElseThrow(() -> new PatientNotFoundException(id));
         Patient patient = vaccinated.getPatient();
+
+        vaccinated.setVaccineType(command.getVaccineType());
+        vaccinated.setDateOfVaccination(command.getDateOfVaccination());
+        vaccinated.setAdministered(command.getAdministered());
+        vaccinated.setLot(command.getLot());
+        vaccinated.setNumberSeriesDoses(command.getNumberSeriesDoses());
+        vaccinated.setOverallNumberDoses(command.getOverallNumberDoses());
 
         patient.setLastVaccinationDate(command.getDateOfVaccination());
         patient.setDoses(command.getNumberSeriesDoses());
@@ -61,7 +67,7 @@ public class VaccinatedService {
             patient.getVaccinationPointEvent().setOccasion(command.getNextVaccinationDate());
         } else {
             patient.setVaccinationPointEvent(null);
-            vaccinationPointEventRepository.deleteById(patient.getVaccinationPointEvent().getId());
+            vaccinationPointEventRepository.deleteById(patient.getId());
         }
         return modelMapper.map(vaccinated, VaccinatedDTO.class);
     }
