@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Sql(statements = {
-        "delete from vaccinateds",
-        "delete from vaccination_point_events",
-        "delete from patients"})
+        "delete from `vaccinateds`",
+        "delete from `vaccination_point_events`",
+        "delete from `patients`"})
 class PatientServiceIT {
 
     @Autowired

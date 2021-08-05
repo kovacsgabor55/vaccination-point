@@ -20,9 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(statements = {
-        "delete from vaccinateds",
-        "delete from vaccination_point_events",
-        "delete from patients"})
+        "delete from `vaccinateds`",
+        "delete from `vaccination_point_events`",
+        "delete from `patients`"})
 class PatientControllerRestIT {
 
     @Autowired
@@ -175,5 +175,4 @@ class PatientControllerRestIT {
         assertEquals(URI.create("patients/not-found"), result.getType());
         assertEquals(Status.NOT_FOUND, result.getStatus());
     }
-
 }
