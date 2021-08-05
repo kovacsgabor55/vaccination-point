@@ -25,9 +25,19 @@ public class VaccinatedService {
 
     private final VaccinatedRepository repository;
 
-    //TODO exception
+    public List<VaccinatedDTO> listAll() {
+        return repository.findAll().stream().map(item -> modelMapper.map(item, VaccinatedDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public VaccinatedDTO findById(long id) {
+        return modelMapper.map(repository.findById(id)
+                        .orElseThrow(() -> new VaccinatedNotFoundException(id)),
+                VaccinatedDTO.class);
+    }
+
     @Transactional
-    public VaccinatedDTO save(long patientId, CreateVaccinatedCommand command) {
+    public VaccinatedDTO create(long patientId, CreateVaccinatedCommand command) {
         Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new PatientNotFoundException(patientId));
         long vaccinationPointId = patient.getVaccinationPointEvent().getId();
         VaccinationPointEvent vaccinationPointEvent = vaccinationPointEventRepository.findById(vaccinationPointId).orElseThrow(() -> new PatientNotFoundException(vaccinationPointId));
@@ -47,10 +57,9 @@ public class VaccinatedService {
         return modelMapper.map(newVaccinated, VaccinatedDTO.class);
     }
 
-    //TODO exception
     @Transactional
     public VaccinatedDTO updateById(long id, UpdateVaccinatedCommand command) {
-        Vaccinated vaccinated = repository.findById(id).orElseThrow(() -> new PatientNotFoundException(id));
+        Vaccinated vaccinated = repository.findById(id).orElseThrow(() -> new VaccinatedNotFoundException(id));
         Patient patient = vaccinated.getPatient();
 
         vaccinated.setVaccineType(command.getVaccineType());
@@ -70,17 +79,6 @@ public class VaccinatedService {
             vaccinationPointEventRepository.deleteById(patient.getId());
         }
         return modelMapper.map(vaccinated, VaccinatedDTO.class);
-    }
-
-    public List<VaccinatedDTO> listAll() {
-        return repository.findAll().stream().map(item -> modelMapper.map(item, VaccinatedDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    public VaccinatedDTO findById(long id) {
-        return modelMapper.map(repository.findById(id)
-                        .orElseThrow(() -> new PatientNotFoundException(id)),
-                VaccinatedDTO.class);
     }
 
     public void deleteById(long id) {

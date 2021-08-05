@@ -21,7 +21,7 @@ public class VaccinatedController {
     @GetMapping("all")
     @Operation(summary = "list all vaccinateds")
     @ApiResponse(responseCode = "200", description = "vaccinateds has been listed")
-    public List<VaccinatedDTO> get() {
+    public List<VaccinatedDTO> listAll() {
         return service.listAll();
     }
 
@@ -32,18 +32,18 @@ public class VaccinatedController {
         return service.findById(id);
     }
 
-    @PostMapping("{patientId}")
+    @PostMapping("patient/{patientId}")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "creates an vaccinated")
     @ApiResponse(responseCode = "201", description = "vaccinated has been created")
     public VaccinatedDTO create(@PathVariable("patientId") long patientId, @Valid @RequestBody CreateVaccinatedCommand command) {
-        return service.save(patientId, command);
+        return service.create(patientId, command);
     }
 
     @PutMapping("{id}")
     @Operation(summary = "modify an vaccinated")
     @ApiResponse(responseCode = "200", description = "vaccinated has been modified")
-    public VaccinatedDTO update(@PathVariable("id") int id, @Valid @RequestBody UpdateVaccinatedCommand command) {
+    public VaccinatedDTO updateById(@PathVariable("id") int id, @Valid @RequestBody UpdateVaccinatedCommand command) {
         return service.updateById(id, command);
     }
 
@@ -51,11 +51,11 @@ public class VaccinatedController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "delete an vaccinated")
     @ApiResponse(responseCode = "200", description = "vaccinated has been deleted")
-    public void delete(@PathVariable("id") long id) {
+    public void deleteById(@PathVariable("id") long id) {
         service.deleteById(id);
     }
 
-    @DeleteMapping("deleteall")
+    @DeleteMapping("delete/all")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "delete all vaccinateds")
     @ApiResponse(responseCode = "200", description = "vaccinateds has been deleted")

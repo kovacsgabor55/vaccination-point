@@ -28,7 +28,7 @@ class PatientServiceIT {
         String email = "johndoe@example.com";
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
 
-        PatientDTO result = service.save(command);
+        PatientDTO result = service.create(command);
 
         assertEquals(taj, result.getTaj());
         assertEquals(name, result.getName());
@@ -49,8 +49,8 @@ class PatientServiceIT {
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
         CreatePatientCommand command2 = new CreatePatientCommand(taj2, name2, dob2, email2);
 
-        service.save(command);
-        service.save(command2);
+        service.create(command);
+        service.create(command2);
         List<PatientDTO> result = service.listAll();
 
         assertEquals(2, result.size());
@@ -67,7 +67,7 @@ class PatientServiceIT {
         String email = "johndoe@example.com";
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
 
-        long id = service.save(command).getId();
+        long id = service.create(command).getId();
         PatientDTO result = service.findById(id);
 
         assertEquals(name, result.getName());
@@ -87,7 +87,7 @@ class PatientServiceIT {
         String emailMod = "janedode@example.com";
         UpdatePatientCommand updateCommand = new UpdatePatientCommand(tajMod, nameMod, dobMod, emailMod);
 
-        long id = service.save(createCommand).getId();
+        long id = service.create(createCommand).getId();
         PatientDTO result = service.updateById(id, updateCommand);
 
         assertEquals(tajMod, result.getTaj());
@@ -106,8 +106,8 @@ class PatientServiceIT {
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
         CreatePatientCommand command2 = new CreatePatientCommand(taj2, name, dob, email);
 
-        long id = service.save(command).getId();
-        service.save(command2);
+        long id = service.create(command).getId();
+        service.create(command2);
         service.deleteById(id);
 
         assertEquals(1, service.listAll().size());
@@ -124,8 +124,8 @@ class PatientServiceIT {
         CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
         CreatePatientCommand command2 = new CreatePatientCommand(taj2, name, dob, email);
 
-        service.save(command);
-        service.save(command2);
+        service.create(command);
+        service.create(command2);
         service.deleteAll();
 
         assertEquals(0, service.listAll().size());

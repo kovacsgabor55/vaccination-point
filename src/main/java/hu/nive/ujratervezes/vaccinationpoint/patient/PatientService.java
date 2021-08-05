@@ -16,12 +16,6 @@ public class PatientService {
 
     private final PatientRepository repository;
 
-    public PatientDTO save(CreatePatientCommand command) {
-        Patient item = new Patient(command.getTaj(), command.getName(), command.getDateOfBirth(), command.getEmail());
-        repository.save(item);
-        return modelMapper.map(item, PatientDTO.class);
-    }
-
     public List<PatientDTO> listAll() {
         return repository.findAll().stream().map(item -> modelMapper.map(item, PatientDTO.class))
                 .collect(Collectors.toList());
@@ -31,6 +25,12 @@ public class PatientService {
         return modelMapper.map(repository.findById(id)
                         .orElseThrow(() -> new PatientNotFoundException(id)),
                 PatientDTO.class);
+    }
+
+    public PatientDTO create(CreatePatientCommand command) {
+        Patient item = new Patient(command.getTaj(), command.getName(), command.getDateOfBirth(), command.getEmail());
+        repository.save(item);
+        return modelMapper.map(item, PatientDTO.class);
     }
 
     @Transactional

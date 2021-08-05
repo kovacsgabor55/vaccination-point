@@ -149,7 +149,7 @@ class PatientControllerRestIT {
                 PatientDTO.class);
 
         template.exchange(
-                "/api/patient/deleteall",
+                "/api/patient/delete/all",
                 HttpMethod.DELETE,
                 null,
                 new ParameterizedTypeReference<PatientDTO>() {

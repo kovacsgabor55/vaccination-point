@@ -1,6 +1,6 @@
 FROM adoptopenjdk:16-jre-hotspot as builder
 WORKDIR application
-COPY target/vaccination-point-0.0.1-SNAPSHOT.jar VaccinationPoint.jar
+COPY target/vaccination-point-1.0.0.jar VaccinationPoint.jar
 RUN java -Djarmode=layertools -jar VaccinationPoint.jar extract
 
 FROM adoptopenjdk:16-jre-hotspot

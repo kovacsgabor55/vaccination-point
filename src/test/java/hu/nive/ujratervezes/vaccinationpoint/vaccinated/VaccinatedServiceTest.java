@@ -40,7 +40,7 @@ class VaccinatedServiceTest {
         LocalDateTime nextVaccinationDate = LocalDateTime.of(2021, 11, 24, 16, 50);
         CreateVaccinatedCommand command = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
 
-        VaccinatedDTO result = service.save(patientId, command);
+        VaccinatedDTO result = service.create(patientId, command);
 
         assertEquals(numberSeriesDoses, result.getNumberSeriesDoses());
         assertEquals(overallNumberDoses, result.getOverallNumberDoses());
@@ -68,7 +68,7 @@ class VaccinatedServiceTest {
         LocalDateTime nextVaccinationDate = LocalDateTime.of(2021, 11, 24, 16, 50);
         CreateVaccinatedCommand command = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
 
-        VaccinatedDTO result = service.save(patientId, command);
+        VaccinatedDTO result = service.create(patientId, command);
 
         assertEquals(numberSeriesDoses, result.getNumberSeriesDoses());
         assertEquals(overallNumberDoses, result.getOverallNumberDoses());
@@ -104,7 +104,7 @@ class VaccinatedServiceTest {
         CreateVaccinatedCommand createCommand = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
         UpdateVaccinatedCommand modifyCommand = new UpdateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination2, administered2, vaccineType2, lot2, nextVaccination, nextVaccinationDate2);
 
-        long id = service.save(patientId, createCommand).getId();
+        long id = service.create(patientId, createCommand).getId();
         VaccinatedDTO result = service.updateById(id, modifyCommand);
 
         assertEquals(numberSeriesDoses, result.getNumberSeriesDoses());
@@ -141,7 +141,7 @@ class VaccinatedServiceTest {
         CreateVaccinatedCommand createCommand = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
         UpdateVaccinatedCommand modifyCommand = new UpdateVaccinatedCommand(numberSeriesDoses2, overallNumberDoses, dateOfVaccination2, administered2, vaccineType2, lot2, nextVaccination, nextVaccinationDate2);
 
-        long id = service.save(patientId, createCommand).getId();
+        long id = service.create(patientId, createCommand).getId();
         VaccinatedDTO result = service.updateById(id, modifyCommand);
 
         assertEquals(numberSeriesDoses2, result.getNumberSeriesDoses());
@@ -178,8 +178,8 @@ class VaccinatedServiceTest {
         CreateVaccinatedCommand createCommand = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
         CreateVaccinatedCommand createCommand2 = new CreateVaccinatedCommand(numberSeriesDoses2, overallNumberDoses, dateOfVaccination2, administered2, vaccineType2, lot2, nextVaccination2, nextVaccinationDate2);
 
-        long id = service.save(patientId, createCommand).getId();
-        long id2 = service.save(patientId, createCommand2).getId();
+        long id = service.create(patientId, createCommand).getId();
+        long id2 = service.create(patientId, createCommand2).getId();
         List<VaccinatedDTO> result = service.listAll();
 
         assertEquals(2, result.size());
@@ -201,7 +201,7 @@ class VaccinatedServiceTest {
         LocalDateTime nextVaccinationDate = null;
         CreateVaccinatedCommand createCommand = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
 
-        long id = service.save(patientId, createCommand).getId();
+        long id = service.create(patientId, createCommand).getId();
 
         VaccinatedDTO result = service.findById(id);
 
@@ -229,8 +229,8 @@ class VaccinatedServiceTest {
         CreateVaccinatedCommand createCommand = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
         CreateVaccinatedCommand createCommand2 = new CreateVaccinatedCommand(numberSeriesDoses2, overallNumberDoses, dateOfVaccination2, administered2, vaccineType2, lot2, nextVaccination2, nextVaccinationDate2);
 
-        long deleteId = service.save(patientId, createCommand).getId();
-        long testId = service.save(patientId, createCommand2).getId();
+        long deleteId = service.create(patientId, createCommand).getId();
+        long testId = service.create(patientId, createCommand2).getId();
 
         service.deleteById(deleteId);
 
@@ -260,8 +260,8 @@ class VaccinatedServiceTest {
         CreateVaccinatedCommand createCommand = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
         CreateVaccinatedCommand createCommand2 = new CreateVaccinatedCommand(numberSeriesDoses2, overallNumberDoses, dateOfVaccination2, administered2, vaccineType2, lot2, nextVaccination2, nextVaccinationDate2);
 
-        service.save(patientId, createCommand);
-        service.save(patientId, createCommand2);
+        service.create(patientId, createCommand);
+        service.create(patientId, createCommand2);
 
         service.deleteAll();
 

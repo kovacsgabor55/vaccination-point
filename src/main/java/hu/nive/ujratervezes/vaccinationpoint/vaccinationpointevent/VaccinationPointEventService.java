@@ -21,9 +21,19 @@ public class VaccinationPointEventService {
 
     private final PatientRepository patientRepository;
 
-    //TODO exception
+    public List<VaccinationPointEventDTO> listAll() {
+        return repository.findAll().stream().map(item -> modelMapper.map(item, VaccinationPointEventDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public VaccinationPointEventDTO findById(long id) {
+        return modelMapper.map(repository.findById(id)
+                        .orElseThrow(() -> new VaccinatedPointEventNotFoundException(id)),
+                VaccinationPointEventDTO.class);
+    }
+
     @Transactional
-    public VaccinationPointEventDTO save(long id, CreateVaccinationPointEventCommand command) {
+    public VaccinationPointEventDTO create(long id, CreateVaccinationPointEventCommand command) {
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException(id));
         VaccinationPointEvent newVaccinationPointEvent = new VaccinationPointEvent(patient, command.getOccasion(), command.getAddress(), command.getVaccineType());
         repository.save(newVaccinationPointEvent);
@@ -31,32 +41,19 @@ public class VaccinationPointEventService {
         return modelMapper.map(newVaccinationPointEvent, VaccinationPointEventDTO.class);
     }
 
-    //TODO exception
     @Transactional
     public VaccinationPointEventDTO updateById(long id, UpdateVaccinationPointEventCommand command) {
         VaccinationPointEvent item = repository.findById(id)
-                .orElseThrow(() -> new PatientNotFoundException(id));
+                .orElseThrow(() -> new VaccinatedPointEventNotFoundException(id));
         item.setOccasion(command.getOccasion());
         return modelMapper.map(item, VaccinationPointEventDTO.class);
-    }
-
-    //TODO exception
-    public VaccinationPointEventDTO findById(long id) {
-        return modelMapper.map(repository.findById(id)
-                        .orElseThrow(() -> new PatientNotFoundException(id)),
-                VaccinationPointEventDTO.class);
-    }
-
-    public void deleteAll() {
-        repository.deleteAll();
     }
 
     public void deleteById(long id) {
         repository.deleteById(id);
     }
 
-    public List<VaccinationPointEventDTO> listAll() {
-        return repository.findAll().stream().map(item -> modelMapper.map(item, VaccinationPointEventDTO.class))
-                .collect(Collectors.toList());
+    public void deleteAll() {
+        repository.deleteAll();
     }
 }

@@ -21,7 +21,7 @@ public class PatientController {
     @GetMapping("all")
     @Operation(summary = "list all patients")
     @ApiResponse(responseCode = "200", description = "patients has been listed")
-    public List<PatientDTO> get() {
+    public List<PatientDTO> listAll() {
         return service.listAll();
     }
 
@@ -37,13 +37,13 @@ public class PatientController {
     @Operation(summary = "creates an patient")
     @ApiResponse(responseCode = "201", description = "patient has been created")
     public PatientDTO create(@Valid @RequestBody CreatePatientCommand command) {
-        return service.save(command);
+        return service.create(command);
     }
 
     @PutMapping("{id}")
     @Operation(summary = "modify an patient")
     @ApiResponse(responseCode = "200", description = "patient has been modified")
-    public PatientDTO update(@PathVariable("id") int id, @Valid @RequestBody UpdatePatientCommand command) {
+    public PatientDTO updateById(@PathVariable("id") int id, @Valid @RequestBody UpdatePatientCommand command) {
         return service.updateById(id, command);
     }
 
@@ -51,11 +51,11 @@ public class PatientController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "delete an patient")
     @ApiResponse(responseCode = "200", description = "patient has been deleted")
-    public void delete(@PathVariable("id") long id) {
+    public void deleteById(@PathVariable("id") long id) {
         service.deleteById(id);
     }
 
-    @DeleteMapping("deleteall")
+    @DeleteMapping("delete/all")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "delete all patients")
     @ApiResponse(responseCode = "200", description = "patients has been deleted")

@@ -21,7 +21,7 @@ public class VaccinationPointEventController {
     @GetMapping("all")
     @Operation(summary = "list all vaccination point events")
     @ApiResponse(responseCode = "200", description = "vaccination point events has been listed")
-    public List<VaccinationPointEventDTO> get() {
+    public List<VaccinationPointEventDTO> listAll() {
         return service.listAll();
     }
 
@@ -33,19 +33,19 @@ public class VaccinationPointEventController {
     }
 
     //TODO validation
-    @PostMapping("{patientId}")
+    @PostMapping("patient/{patientId}")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "creates an vaccination point event by patient id")
     @ApiResponse(responseCode = "201", description = "vaccination point event has been created")
     public VaccinationPointEventDTO create(@PathVariable("patientId") long patientId, @Valid @RequestBody CreateVaccinationPointEventCommand command) {
-        return service.save(patientId,command);
+        return service.create(patientId, command);
     }
 
     //TODO validation
     @PutMapping("{id}")
     @Operation(summary = "modify an vaccination point event")
     @ApiResponse(responseCode = "200", description = "vaccination point event has been modified")
-    public VaccinationPointEventDTO update(@PathVariable("id") int id, @Valid @RequestBody UpdateVaccinationPointEventCommand command) {
+    public VaccinationPointEventDTO updateById(@PathVariable("id") int id, @Valid @RequestBody UpdateVaccinationPointEventCommand command) {
         return service.updateById(id, command);
     }
 
@@ -53,11 +53,11 @@ public class VaccinationPointEventController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "delete an vaccination point event")
     @ApiResponse(responseCode = "200", description = "vaccination point event has been deleted")
-    public void delete(@PathVariable("id") long id) {
+    public void deleteById(@PathVariable("id") long id) {
         service.deleteById(id);
     }
 
-    @DeleteMapping("deleteall")
+    @DeleteMapping("delete/all")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "delete all vaccination point events")
     @ApiResponse(responseCode = "200", description = "vaccination point events has been deleted")

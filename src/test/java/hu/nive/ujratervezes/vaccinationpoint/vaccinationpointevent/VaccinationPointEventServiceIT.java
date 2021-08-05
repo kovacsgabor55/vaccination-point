@@ -34,7 +34,7 @@ class VaccinationPointEventServiceIT {
         VaccineType vaccineType = VaccineType.COMIRNATY;
         CreateVaccinationPointEventCommand command = new CreateVaccinationPointEventCommand(occasion, address, vaccineType);
 
-        VaccinationPointEventDTO result = service.save(patientId, command);
+        VaccinationPointEventDTO result = service.create(patientId, command);
 
         assertEquals(occasion, result.getOccasion());
         assertEquals(address, result.getAddress());
@@ -51,7 +51,7 @@ class VaccinationPointEventServiceIT {
         LocalDateTime newOccasion = occasion.plusMonths(3);
         UpdateVaccinationPointEventCommand updateCommand = new UpdateVaccinationPointEventCommand(newOccasion);
 
-        long id = service.save(patientId, createCommand).getId();
+        long id = service.create(patientId, createCommand).getId();
         VaccinationPointEventDTO result = service.updateById(id, updateCommand);
 
         assertEquals(newOccasion, result.getOccasion());
@@ -66,7 +66,7 @@ class VaccinationPointEventServiceIT {
         VaccineType vaccineType = VaccineType.COMIRNATY;
         CreateVaccinationPointEventCommand command = new CreateVaccinationPointEventCommand(occasion, address, vaccineType);
 
-        long id = service.save(patientId, command).getId();
+        long id = service.create(patientId, command).getId();
 
         VaccinationPointEventDTO result = service.findById(id);
 
@@ -88,8 +88,8 @@ class VaccinationPointEventServiceIT {
         CreateVaccinationPointEventCommand command = new CreateVaccinationPointEventCommand(occasion, address, vaccineType);
         CreateVaccinationPointEventCommand command2 = new CreateVaccinationPointEventCommand(occasion2, address2, vaccineType2);
 
-        service.save(patientId, command);
-        service.save(patientId2, command2);
+        service.create(patientId, command);
+        service.create(patientId2, command2);
 
         service.deleteAll();
 
@@ -108,8 +108,8 @@ class VaccinationPointEventServiceIT {
         CreateVaccinationPointEventCommand command = new CreateVaccinationPointEventCommand(occasion, address, vaccineType);
         CreateVaccinationPointEventCommand command2 = new CreateVaccinationPointEventCommand(occasion2, address2, vaccineType2);
 
-        long deleteId = service.save(patientId, command).getId();
-        long testId = service.save(patientId2, command2).getId();
+        long deleteId = service.create(patientId, command).getId();
+        long testId = service.create(patientId2, command2).getId();
 
         service.deleteById(deleteId);
 
@@ -132,8 +132,8 @@ class VaccinationPointEventServiceIT {
         CreateVaccinationPointEventCommand command = new CreateVaccinationPointEventCommand(occasion, address, vaccineType);
         CreateVaccinationPointEventCommand command2 = new CreateVaccinationPointEventCommand(occasion2, address2, vaccineType2);
 
-        long id1 = service.save(patientId, command).getId();
-        long id2 = service.save(patientId2, command2).getId();
+        long id1 = service.create(patientId, command).getId();
+        long id2 = service.create(patientId2, command2).getId();
 
         List<VaccinationPointEventDTO> result = service.listAll();
 
