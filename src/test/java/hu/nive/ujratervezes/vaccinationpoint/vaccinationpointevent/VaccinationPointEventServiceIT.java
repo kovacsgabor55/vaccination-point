@@ -1,15 +1,11 @@
 package hu.nive.ujratervezes.vaccinationpoint.vaccinationpointevent;
 
 import hu.nive.ujratervezes.vaccinationpoint.VaccineType;
-import hu.nive.ujratervezes.vaccinationpoint.patient.CreatePatientCommand;
-import hu.nive.ujratervezes.vaccinationpoint.patient.PatientService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,30 +14,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Sql(statements = {
-        "delete from vaccinateds",
-        "delete from vaccination_point_events",
-        "delete from patients"})
+        "delete from `vaccinateds`",
+        "delete from `vaccination_point_events`",
+        "delete from `patients`",
+        "insert into `patients` (`id`, `date_of_birth`, `doses`, `e_mail`, `last_vaccination_date`, `name`, `taj`, `vaccine_type`) values (1, '1957-12-24', 0, 'johndoe@example.com', null, 'John Doe', '123456788', null)",
+        "insert into `patients` (`id`, `date_of_birth`, `doses`, `e_mail`, `last_vaccination_date`, `name`, `taj`, `vaccine_type`) values (2, '1985-10-18', 0, 'janedoe@example.com', null, 'Jane Doe', '037687210', null)"})
 class VaccinationPointEventServiceIT {
-
-    @Autowired
-    private PatientService patientService;
 
     @Autowired
     private VaccinationPointEventService service;
 
-    private long patientId = 0;
-
-    @BeforeEach
-    void setUp() {
-        String taj = "123456788";
-        String name = "John Doe";
-        LocalDate dob = LocalDate.of(1957, 12, 24);
-        String email = "johndoe@example.com";
-
-        CreatePatientCommand command = new CreatePatientCommand(taj, name, dob, email);
-
-        patientId = patientService.save(command).getId();
-    }
+    private final long patientId = 1;
+    private final long patientId2 = 2;
 
     @Test
     void save() {
@@ -94,15 +78,6 @@ class VaccinationPointEventServiceIT {
 
     @Test
     void deleteAll() {
-        String taj = "037687210";
-        String name = "Jane Doe";
-        LocalDate dob = LocalDate.of(1985, 10, 18);
-        String email = "janedoe@example.com";
-
-        CreatePatientCommand createPatientCommand = new CreatePatientCommand(taj, name, dob, email);
-
-        long patientId2 = patientService.save(createPatientCommand).getId();
-
         LocalDateTime occasion = LocalDateTime.of(2021, 10, 12, 14, 50);
         LocalDateTime occasion2 = LocalDateTime.of(2021, 10, 12, 14, 50);
         String address = "Miskolc Megyei Kórház 2. oltópont";
@@ -123,15 +98,6 @@ class VaccinationPointEventServiceIT {
 
     @Test
     void deleteById() {
-        String taj = "037687210";
-        String name = "Jane Doe";
-        LocalDate dob = LocalDate.of(1985, 10, 18);
-        String email = "janedoe@example.com";
-
-        CreatePatientCommand createPatientCommand = new CreatePatientCommand(taj, name, dob, email);
-
-        long patientId2 = patientService.save(createPatientCommand).getId();
-
         LocalDateTime occasion = LocalDateTime.of(2021, 10, 12, 14, 50);
         LocalDateTime occasion2 = LocalDateTime.of(2021, 10, 12, 14, 55);
         String address = "Miskolc Megyei Kórház 2. oltópont";
@@ -156,15 +122,6 @@ class VaccinationPointEventServiceIT {
 
     @Test
     void listAll() {
-        String taj = "037687210";
-        String name = "Jane Doe";
-        LocalDate dob = LocalDate.of(1985, 10, 18);
-        String email = "janedoe@example.com";
-
-        CreatePatientCommand createPatientCommand = new CreatePatientCommand(taj, name, dob, email);
-
-        long patientId2 = patientService.save(createPatientCommand).getId();
-
         LocalDateTime occasion = LocalDateTime.of(2021, 10, 12, 14, 50);
         LocalDateTime occasion2 = LocalDateTime.of(2021, 10, 12, 14, 55);
         String address = "Miskolc Megyei Kórház 2. oltópont";
