@@ -36,7 +36,7 @@ class VaccinationPointEventControllerRestIT {
 
     @BeforeEach
     void setUp() {
-        template.delete("/api/vaccinationpointevent");
+        template.delete("/api/vaccinationpointevents/");
     }
 
     @Test
@@ -48,16 +48,16 @@ class VaccinationPointEventControllerRestIT {
         VaccineType vaccineType = VaccineType.COMIRNATY;
         VaccineType vaccineType2 = VaccineType.SINOPHARM;
 
-        template.postForObject("/api/vaccinationpointevent/patient/" + patientId,
+        template.postForObject("/api/vaccinationpointevents/patients/" + patientId,
                 new CreateVaccinationPointEventCommand(occasion, address, vaccineType),
                 VaccinationPointEventDTO.class);
 
-        template.postForObject("/api/vaccinationpointevent/patient/" + patientId2,
+        template.postForObject("/api/vaccinationpointevents/patients/" + patientId2,
                 new CreateVaccinationPointEventCommand(occasion2, address2, vaccineType2),
                 VaccinationPointEventDTO.class);
 
         List<VaccinationPointEventDTO> result = template.exchange(
-                "/api/vaccinationpointevent/all/",
+                "/api/vaccinationpointevents/",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<VaccinationPointEventDTO>>() {
@@ -77,16 +77,16 @@ class VaccinationPointEventControllerRestIT {
         VaccineType vaccineType = VaccineType.COMIRNATY;
         VaccineType vaccineType2 = VaccineType.SINOPHARM;
 
-        long id = template.postForObject("/api/vaccinationpointevent/patient/" + patientId,
+        long id = template.postForObject("/api/vaccinationpointevents/patients/" + patientId,
                 new CreateVaccinationPointEventCommand(occasion, address, vaccineType),
                 VaccinationPointEventDTO.class).getId();
 
-        template.postForObject("/api/vaccinationpointevent/patient/" + patientId2,
+        template.postForObject("/api/vaccinationpointevents/patients/" + patientId2,
                 new CreateVaccinationPointEventCommand(occasion2, address2, vaccineType2),
                 VaccinationPointEventDTO.class);
 
         VaccinationPointEventDTO result = template.exchange(
-                "/api/vaccinationpointevent/" + id,
+                "/api/vaccinationpointevents/" + id,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<VaccinationPointEventDTO>() {
@@ -101,7 +101,7 @@ class VaccinationPointEventControllerRestIT {
         String address = "Miskolc Megyei Kórház 2. oltópont";
         VaccineType vaccineType = VaccineType.COMIRNATY;
 
-        VaccinationPointEventDTO result = template.postForObject("/api/vaccinationpointevent/patient/" + patientId,
+        VaccinationPointEventDTO result = template.postForObject("/api/vaccinationpointevents/patients/" + patientId,
                 new CreateVaccinationPointEventCommand(occasion, address, vaccineType),
                 VaccinationPointEventDTO.class);
 
@@ -118,15 +118,15 @@ class VaccinationPointEventControllerRestIT {
         VaccineType vaccineType = VaccineType.COMIRNATY;
         LocalDateTime occasion2 = occasion.plusMonths(3);
 
-        long id = template.postForObject("/api/vaccinationpointevent/patient/" + patientId,
+        long id = template.postForObject("/api/vaccinationpointevents/patients/" + patientId,
                 new CreateVaccinationPointEventCommand(occasion, address, vaccineType),
                 VaccinationPointEventDTO.class).getId();
 
-        template.put("/api/vaccinationpointevent/" + id,
+        template.put("/api/vaccinationpointevents/" + id,
                 new UpdateVaccinationPointEventCommand(occasion2));
 
         VaccinationPointEventDTO result = template.exchange(
-                "/api/vaccinationpointevent/" + id,
+                "/api/vaccinationpointevents/" + id,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<VaccinationPointEventDTO>() {
@@ -147,23 +147,23 @@ class VaccinationPointEventControllerRestIT {
         VaccineType vaccineType = VaccineType.COMIRNATY;
         VaccineType vaccineType2 = VaccineType.SINOPHARM;
 
-        long deleteId = template.postForObject("/api/vaccinationpointevent/patient/" + patientId,
+        long deleteId = template.postForObject("/api/vaccinationpointevents/patients/" + patientId,
                 new CreateVaccinationPointEventCommand(occasion, address, vaccineType),
                 VaccinationPointEventDTO.class).getId();
-        long testId = template.postForObject("/api/vaccinationpointevent/patient/" + patientId2,
+        long testId = template.postForObject("/api/vaccinationpointevents/patients/" + patientId2,
                 new CreateVaccinationPointEventCommand(occasion2, address2, vaccineType2),
                 VaccinationPointEventDTO.class).getId();
 
 
         template.exchange(
-                "/api/vaccinationpointevent/" + deleteId,
+                "/api/vaccinationpointevents/" + deleteId,
                 HttpMethod.DELETE,
                 null,
                 new ParameterizedTypeReference<VaccinationPointEventDTO>() {
                 }).getBody();
 
         List<VaccinationPointEventDTO> result = template.exchange(
-                "/api/vaccinationpointevent/all/",
+                "/api/vaccinationpointevents/",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<VaccinationPointEventDTO>>() {
@@ -185,22 +185,22 @@ class VaccinationPointEventControllerRestIT {
         VaccineType vaccineType = VaccineType.COMIRNATY;
         VaccineType vaccineType2 = VaccineType.SINOPHARM;
 
-        template.postForObject("/api/vaccinationpointevent/patient/" + patientId,
+        template.postForObject("/api/vaccinationpointevents/patients/" + patientId,
                 new CreateVaccinationPointEventCommand(occasion, address, vaccineType),
                 VaccinationPointEventDTO.class);
-        template.postForObject("/api/vaccinationpointevent/patient/" + patientId2,
+        template.postForObject("/api/vaccinationpointevents/patients/" + patientId2,
                 new CreateVaccinationPointEventCommand(occasion2, address2, vaccineType2),
                 VaccinationPointEventDTO.class);
 
         template.exchange(
-                "/api/vaccinationpointevent/delete/all",
+                "/api/vaccinationpointevents/",
                 HttpMethod.DELETE,
                 null,
                 new ParameterizedTypeReference<VaccinationPointEventDTO>() {
                 }).getBody();
 
         List<VaccinationPointEventDTO> result = template.exchange(
-                "/api/vaccinationpointevent/all/",
+                "/api/vaccinationpointevents/",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<VaccinationPointEventDTO>>() {
@@ -211,7 +211,7 @@ class VaccinationPointEventControllerRestIT {
 
     @Test
     void notFoundVaccinationPointEventByIdTest() {
-        Problem result = template.getForObject("/api/vaccinationpointevent/1", Problem.class);
+        Problem result = template.getForObject("/api/vaccinationpointevents/1", Problem.class);
 
         assertEquals(URI.create("vaccinationpointevents/not-found"), result.getType());
         assertEquals(Status.NOT_FOUND, result.getStatus());

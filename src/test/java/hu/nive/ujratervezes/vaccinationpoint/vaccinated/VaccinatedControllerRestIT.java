@@ -36,7 +36,7 @@ class VaccinatedControllerRestIT {
 
     @BeforeEach
     void setUp() {
-        template.delete("/api/vaccinated");
+        template.delete("/api/vaccinateds/");
     }
 
     @Test
@@ -57,14 +57,14 @@ class VaccinatedControllerRestIT {
         LocalDateTime nextVaccinationDate = LocalDateTime.of(2021, 11, 24, 16, 50);
         LocalDateTime nextVaccinationDate2 = LocalDateTime.of(2021, 11, 24, 16, 55);
 
-        long id = template.postForObject("/api/vaccinated/patient/" + patientId,
+        long id = template.postForObject("/api/vaccinateds/patients/" + patientId,
                 new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate),
                 VaccinatedDTO.class).getId();
-        long id2 = template.postForObject("/api/vaccinated/patient/" + patientId,
+        long id2 = template.postForObject("/api/vaccinateds/patients/" + patientId,
                 new CreateVaccinatedCommand(numberSeriesDoses2, overallNumberDoses, dateOfVaccination2, administered2, vaccineType2, lot2, nextVaccination2, nextVaccinationDate2),
                 VaccinatedDTO.class).getId();
         List<VaccinatedDTO> result = template.exchange(
-                "/api/vaccinated/all/",
+                "/api/vaccinateds/",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<VaccinatedDTO>>() {
@@ -88,12 +88,12 @@ class VaccinatedControllerRestIT {
         boolean nextVaccination = false;
         LocalDateTime nextVaccinationDate = LocalDateTime.of(2021, 11, 24, 16, 50);
 
-        long id = template.postForObject("/api/vaccinated/patient/" + patientId,
+        long id = template.postForObject("/api/vaccinateds/patients/" + patientId,
                 new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate),
                 VaccinatedDTO.class).getId();
 
         VaccinatedDTO result = template.exchange(
-                "/api/vaccinated/" + id,
+                "/api/vaccinateds/" + id,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<VaccinatedDTO>() {
@@ -114,7 +114,7 @@ class VaccinatedControllerRestIT {
         boolean nextVaccination = true;
         LocalDateTime nextVaccinationDate = LocalDateTime.of(2021, 11, 24, 16, 50);
 
-        VaccinatedDTO result = template.postForObject("/api/vaccinated/patient/" + patientId,
+        VaccinatedDTO result = template.postForObject("/api/vaccinateds/patients/" + patientId,
                 new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate),
                 VaccinatedDTO.class);
 
@@ -149,14 +149,14 @@ class VaccinatedControllerRestIT {
         LocalDateTime nextVaccinationDate = LocalDateTime.of(2021, 11, 24, 16, 50);
         LocalDateTime nextVaccinationDate2 = LocalDateTime.of(2021, 11, 24, 16, 55);
 
-        long id = template.postForObject("/api/vaccinated/patient/" + patientId,
+        long id = template.postForObject("/api/vaccinateds/patients/" + patientId,
                 new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate),
                 VaccinatedDTO.class).getId();
-        template.put("/api/vaccinated/" + id,
+        template.put("/api/vaccinateds/" + id,
                 new UpdateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination2, administered2, vaccineType2, lot2, nextVaccination, nextVaccinationDate2));
 
         VaccinatedDTO result = template.exchange(
-                "/api/vaccinated/" + id,
+                "/api/vaccinateds/" + id,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<VaccinatedDTO>() {
@@ -194,22 +194,22 @@ class VaccinatedControllerRestIT {
         LocalDateTime nextVaccinationDate = LocalDateTime.of(2021, 11, 24, 16, 50);
         LocalDateTime nextVaccinationDate2 = LocalDateTime.of(2021, 11, 24, 16, 55);
 
-        long deleteId = template.postForObject("/api/vaccinated/patient/" + patientId,
+        long deleteId = template.postForObject("/api/vaccinateds/patients/" + patientId,
                 new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate),
                 VaccinatedDTO.class).getId();
-        long testId = template.postForObject("/api/vaccinated/patient/" + patientId,
+        long testId = template.postForObject("/api/vaccinateds/patients/" + patientId,
                 new CreateVaccinatedCommand(numberSeriesDoses2, overallNumberDoses, dateOfVaccination2, administered2, vaccineType2, lot2, nextVaccination2, nextVaccinationDate2),
                 VaccinatedDTO.class).getId();
 
         template.exchange(
-                "/api/vaccinated/" + deleteId,
+                "/api/vaccinateds/" + deleteId,
                 HttpMethod.DELETE,
                 null,
                 new ParameterizedTypeReference<VaccinatedDTO>() {
                 }).getBody();
 
         List<VaccinatedDTO> result = template.exchange(
-                "/api/vaccinated/all/",
+                "/api/vaccinateds/",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<VaccinatedDTO>>() {
@@ -237,23 +237,23 @@ class VaccinatedControllerRestIT {
         LocalDateTime nextVaccinationDate = LocalDateTime.of(2021, 11, 24, 16, 50);
         LocalDateTime nextVaccinationDate2 = LocalDateTime.of(2021, 11, 24, 16, 55);
 
-        template.postForObject("/api/vaccinated/patient/" + patientId,
+        template.postForObject("/api/vaccinateds/patients/" + patientId,
                 new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate),
                 VaccinatedDTO.class);
 
-        template.postForObject("/api/vaccinated/patient/" + patientId,
+        template.postForObject("/api/vaccinateds/patients/" + patientId,
                 new CreateVaccinatedCommand(numberSeriesDoses2, overallNumberDoses, dateOfVaccination2, administered2, vaccineType2, lot2, nextVaccination2, nextVaccinationDate2),
                 VaccinatedDTO.class);
 
         template.exchange(
-                "/api/vaccinated/delete/all",
+                "/api/vaccinateds/",
                 HttpMethod.DELETE,
                 null,
                 new ParameterizedTypeReference<VaccinatedDTO>() {
                 }).getBody();
 
         List<VaccinatedDTO> result = template.exchange(
-                "/api/vaccinated/all/",
+                "/api/vaccinateds/",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<VaccinatedDTO>>() {
@@ -264,7 +264,7 @@ class VaccinatedControllerRestIT {
 
     @Test
     void notFoundVaccinatedByIdTest() {
-        Problem result = template.getForObject("/api/vaccinated/1", Problem.class);
+        Problem result = template.getForObject("/api/vaccinateds/1", Problem.class);
 
         assertEquals(URI.create("vaccinateds/not-found"), result.getType());
         assertEquals(Status.NOT_FOUND, result.getStatus());

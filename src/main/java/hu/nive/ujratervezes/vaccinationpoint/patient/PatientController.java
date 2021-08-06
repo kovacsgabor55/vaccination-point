@@ -12,13 +12,13 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/patient/")
+@RequestMapping("/api/patients/")
 @Tag(name = "Operations on patients")
 public class PatientController {
 
     private final PatientService service;
 
-    @GetMapping("all")
+    @GetMapping
     @Operation(summary = "Lists all patients")
     @ApiResponse(responseCode = "200", description = "Patients has been listed")
     @ApiResponse(responseCode = "400", description = "Bad request, patients cannot be listed")
@@ -70,7 +70,7 @@ public class PatientController {
         service.deleteById(id);
     }
 
-    @DeleteMapping("delete/all")
+    @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Deletes all patients")
     @ApiResponse(responseCode = "204", description = "Patients has been deleted")

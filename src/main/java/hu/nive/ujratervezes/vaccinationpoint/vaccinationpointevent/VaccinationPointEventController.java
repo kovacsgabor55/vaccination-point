@@ -12,13 +12,13 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/vaccinationpointevent/")
+@RequestMapping("/api/vaccinationpointevents/")
 @Tag(name = "Operations on vaccination point event")
 public class VaccinationPointEventController {
 
     private final VaccinationPointEventService service;
 
-    @GetMapping("all")
+    @GetMapping
     @Operation(summary = "List all vaccination point events")
     @ApiResponse(responseCode = "200", description = "Vaccination point events has been listed")
     @ApiResponse(responseCode = "400", description = "Bad request, vaccination point events cannot be listed")
@@ -35,7 +35,7 @@ public class VaccinationPointEventController {
         return service.findById(id);
     }
 
-    @PostMapping("patient/{patientId}")
+    @PostMapping("patients/{patientId}")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Creates an vaccination point event by patient id")
     @ApiResponse(responseCode = "201", description = "Vaccination point event has been created")
@@ -62,7 +62,7 @@ public class VaccinationPointEventController {
         service.deleteById(id);
     }
 
-    @DeleteMapping("delete/all")
+    @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Deletes all vaccination point events")
     @ApiResponse(responseCode = "204", description = "Vaccination point events has been deleted")

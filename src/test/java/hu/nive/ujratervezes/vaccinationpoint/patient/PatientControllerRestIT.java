@@ -30,21 +30,21 @@ class PatientControllerRestIT {
 
     @BeforeEach
     void init() {
-        template.delete("/api/patient");
+        template.delete("/api/patients/");
     }
 
     @Test
     void listAll() {
-        template.postForObject("/api/patient/",
+        template.postForObject("/api/patients/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
                 PatientDTO.class);
 
-        template.postForObject("/api/patient/",
+        template.postForObject("/api/patients/",
                 new CreatePatientCommand("037687210", "Jane Doe", LocalDate.of(1985, 10, 18), "janedoe@example.com"),
                 PatientDTO.class);
 
         List<PatientDTO> result = template.exchange(
-                "/api/patient/all/",
+                "/api/patients/",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<PatientDTO>>() {
@@ -57,16 +57,16 @@ class PatientControllerRestIT {
 
     @Test
     void findById() {
-        long id = template.postForObject("/api/patient/",
+        long id = template.postForObject("/api/patients/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
                 PatientDTO.class).getId();
 
-        template.postForObject("/api/patient/",
+        template.postForObject("/api/patients/",
                 new CreatePatientCommand("037687210", "Jane Doe", LocalDate.of(1985, 10, 18), "janedoe@example.com"),
                 PatientDTO.class);
 
         PatientDTO result = template.exchange(
-                "/api/patient/" + id,
+                "/api/patients/" + id,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<PatientDTO>() {
@@ -77,16 +77,16 @@ class PatientControllerRestIT {
 
     @Test
     void findByTaj() {
-        long id = template.postForObject("/api/patient/",
+        long id = template.postForObject("/api/patients/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
                 PatientDTO.class).getId();
 
-        template.postForObject("/api/patient/",
+        template.postForObject("/api/patients/",
                 new CreatePatientCommand("037687210", "Jane Doe", LocalDate.of(1985, 10, 18), "janedoe@example.com"),
                 PatientDTO.class);
 
         PatientDTO result = template.exchange(
-                "/api/patient/taj/123456788",
+                "/api/patients/taj/123456788",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<PatientDTO>() {
@@ -97,7 +97,7 @@ class PatientControllerRestIT {
 
     @Test
     void createNewPatient() {
-        PatientDTO result = template.postForObject("/api/patient/",
+        PatientDTO result = template.postForObject("/api/patients/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
                 PatientDTO.class);
 
@@ -109,15 +109,15 @@ class PatientControllerRestIT {
 
     @Test
     void update() {
-        long id = template.postForObject("/api/patient/",
+        long id = template.postForObject("/api/patients/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
                 PatientDTO.class).getId();
 
-        template.put("/api/patient/" + id,
+        template.put("/api/patients/" + id,
                 new UpdatePatientCommand("037687210", "Jane Doe", LocalDate.of(1985, 10, 18), "janedoe@example.com"));
 
         List<PatientDTO> result = template.exchange(
-                "/api/patient/all/",
+                "/api/patients/",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<PatientDTO>>() {
@@ -129,23 +129,23 @@ class PatientControllerRestIT {
 
     @Test
     void delete() {
-        long id = template.postForObject("/api/patient/",
+        long id = template.postForObject("/api/patients/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
                 PatientDTO.class).getId();
 
-        template.postForObject("/api/patient/",
+        template.postForObject("/api/patients/",
                 new CreatePatientCommand("037687210", "Jane Doe", LocalDate.of(1985, 10, 18), "janedoe@example.com"),
                 PatientDTO.class);
 
         template.exchange(
-                "/api/patient/" + id,
+                "/api/patients/" + id,
                 HttpMethod.DELETE,
                 null,
                 new ParameterizedTypeReference<PatientDTO>() {
                 }).getBody();
 
         List<PatientDTO> result = template.exchange(
-                "/api/patient/all/",
+                "/api/patients/",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<PatientDTO>>() {
@@ -160,23 +160,23 @@ class PatientControllerRestIT {
 
     @Test
     void deleteAll() {
-        template.postForObject("/api/patient/",
+        template.postForObject("/api/patients/",
                 new CreatePatientCommand("123456788", "John Doe", LocalDate.of(1957, 12, 24), "johndoe@example.com"),
                 PatientDTO.class);
 
-        template.postForObject("/api/patient/",
+        template.postForObject("/api/patients/",
                 new CreatePatientCommand("037687210", "Jane Doe", LocalDate.of(1985, 10, 18), "janedoe@example.com"),
                 PatientDTO.class);
 
         template.exchange(
-                "/api/patient/delete/all",
+                "/api/patients/",
                 HttpMethod.DELETE,
                 null,
                 new ParameterizedTypeReference<PatientDTO>() {
                 }).getBody();
 
         List<PatientDTO> result = template.exchange(
-                "/api/patient/all/",
+                "/api/patients/",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<PatientDTO>>() {
@@ -190,7 +190,7 @@ class PatientControllerRestIT {
 
     @Test
     void notFoundPatientByIdTest() {
-        Problem result = template.getForObject("/api/patient/1", Problem.class);
+        Problem result = template.getForObject("/api/patients/1", Problem.class);
 
         assertEquals(URI.create("patients/not-found"), result.getType());
         assertEquals(Status.NOT_FOUND, result.getStatus());
@@ -198,7 +198,7 @@ class PatientControllerRestIT {
 
     @Test
     void notFoundPatientByTajTest() {
-        Problem result = template.getForObject("/api/patient/taj/037687210", Problem.class);
+        Problem result = template.getForObject("/api/patients/taj/037687210", Problem.class);
 
         assertEquals(URI.create("patients/not-found"), result.getType());
         assertEquals(Status.NOT_FOUND, result.getStatus());
