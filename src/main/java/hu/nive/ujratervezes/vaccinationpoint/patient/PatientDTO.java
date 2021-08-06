@@ -1,15 +1,12 @@
 package hu.nive.ujratervezes.vaccinationpoint.patient;
 
 import hu.nive.ujratervezes.vaccinationpoint.VaccineType;
-import hu.nive.ujratervezes.vaccinationpoint.vaccinated.VaccinatedDTO;
-import hu.nive.ujratervezes.vaccinationpoint.vaccinationpointevent.VaccinationPointEventDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -29,10 +26,6 @@ public class PatientDTO {
 
     @Schema(description = "E-mail of the patient", example = "johndoe@example.com")
     private String email;
-
-    private VaccinationPointEventDTO vaccinationPoint;
-
-    private List<VaccinatedDTO> vaccinateds = new ArrayList<>();
 
     @Schema(description = "last vaccination date of the patient")
     private LocalDateTime lastVaccinationDate;

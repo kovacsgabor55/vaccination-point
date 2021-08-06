@@ -1,0 +1,33 @@
+### list all
+GET http://localhost:8080/api/vaccinationpointevents/
+Accept: application/json
+
+### find by id
+GET http://localhost:8080/api/vaccinationpointevents/1
+Accept: application/json
+
+### create by patient id
+POST http://localhost:8080/api/vaccinationpointevents/patients/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "occasion": "2021-10-12T14:50:00",
+  "address": "Miskolc Megyei Kórház 2. oltópont",
+  "vaccineType": "COMIRNATY"
+}
+
+### update by id
+PUT http://localhost:8080/api/vaccinationpointevents/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "occasion": "2021-11-12T14:50:00"
+}
+
+### delete by id
+DELETE  http://localhost:8080/api/vaccinationpointevents/1
+
+### delete all
+DELETE  http://localhost:8080/api/vaccinationpointevents/

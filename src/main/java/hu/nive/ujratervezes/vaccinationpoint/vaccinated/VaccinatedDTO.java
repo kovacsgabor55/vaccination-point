@@ -15,8 +15,8 @@ public class VaccinatedDTO {
     @Schema(description = "unique identifier of the vaccinated", example = "1")
     private Long id;
 
-    @Schema(description = "", example = "")
-    private Patient patient;
+    @Schema(description = "unique identifier of the patient", example = "1")
+    private long patientID;
 
     @Schema(description = "number of vaccination series of the vaccinated", example = "1")
     private int numberSeriesDoses;

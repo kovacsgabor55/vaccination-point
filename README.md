@@ -8,9 +8,9 @@ A kezelő orvos be tudja jegyezni a páciensnek az oltást és lehetősége van 
 
 ## Használata
 
-Swagger UI url: [/docs/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config](http://localhost:8080/docs/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config)
+[Swagger UI](http://localhost:8080/swagger-ui.html)
 
-Open API url: [/v3/api-docs]( http://localhost:8080/v3/api-docs)
+[Open API](http://localhost:8080/v3/api-docs)
 
 ### Patient
 

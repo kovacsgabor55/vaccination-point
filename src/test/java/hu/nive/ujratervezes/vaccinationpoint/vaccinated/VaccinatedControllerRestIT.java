@@ -2,6 +2,8 @@ package hu.nive.ujratervezes.vaccinationpoint.vaccinated;
 
 import hu.nive.ujratervezes.vaccinationpoint.VaccineAdministered;
 import hu.nive.ujratervezes.vaccinationpoint.VaccineType;
+import hu.nive.ujratervezes.vaccinationpoint.patient.PatientDTO;
+import hu.nive.ujratervezes.vaccinationpoint.vaccinationpointevent.VaccinationPointEventDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,7 @@ class VaccinatedControllerRestIT {
     TestRestTemplate template;
 
     private final long patientId = 1;
+    private final long eventId = 1;
 
     @BeforeEach
     void setUp() {
@@ -70,6 +73,7 @@ class VaccinatedControllerRestIT {
                 new ParameterizedTypeReference<List<VaccinatedDTO>>() {
                 }).getBody();
 
+        assert result != null;
         assertEquals(2, result.size());
 
         assertThat(result)
@@ -99,6 +103,7 @@ class VaccinatedControllerRestIT {
                 new ParameterizedTypeReference<VaccinatedDTO>() {
                 }).getBody();
 
+        assert result != null;
         assertEquals(id, result.getId());
         assertEquals(vaccineType, result.getVaccineType());
     }
@@ -118,6 +123,20 @@ class VaccinatedControllerRestIT {
                 new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate),
                 VaccinatedDTO.class);
 
+        PatientDTO patientResult = template.exchange(
+                "/api/patients/" + patientId,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<PatientDTO>() {
+                }).getBody();
+
+        VaccinationPointEventDTO eventResult = template.exchange(
+                "/api/vaccinationpointevents/" + eventId,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<VaccinationPointEventDTO>() {
+                }).getBody();
+
         assertEquals(numberSeriesDoses, result.getNumberSeriesDoses());
         assertEquals(overallNumberDoses, result.getOverallNumberDoses());
         assertEquals(dateOfVaccination, result.getDateOfVaccination());
@@ -125,11 +144,13 @@ class VaccinatedControllerRestIT {
         assertEquals(vaccineType, result.getVaccineType());
         assertEquals(lot, result.getLot());
 
-        assertEquals(nextVaccinationDate, result.getPatient().getVaccinationPointEvent().getOccasion());
+        assert eventResult != null;
+        assertEquals(nextVaccinationDate, eventResult.getOccasion());
 
-        assertEquals(dateOfVaccination, result.getPatient().getLastVaccinationDate());
-        assertEquals(numberSeriesDoses, result.getPatient().getDoses());
-        assertEquals(vaccineType, result.getPatient().getVaccineType());
+        assert patientResult != null;
+        assertEquals(dateOfVaccination, patientResult.getLastVaccinationDate());
+        assertEquals(numberSeriesDoses, patientResult.getDoses());
+        assertEquals(vaccineType, patientResult.getVaccineType());
     }
 
     @Test
@@ -162,6 +183,21 @@ class VaccinatedControllerRestIT {
                 new ParameterizedTypeReference<VaccinatedDTO>() {
                 }).getBody();
 
+        PatientDTO patientResult = template.exchange(
+                "/api/patients/" + patientId,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<PatientDTO>() {
+                }).getBody();
+
+        VaccinationPointEventDTO eventResult = template.exchange(
+                "/api/vaccinationpointevents/" + eventId,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<VaccinationPointEventDTO>() {
+                }).getBody();
+
+        assert result != null;
         assertEquals(numberSeriesDoses, result.getNumberSeriesDoses());
         assertEquals(overallNumberDoses, result.getOverallNumberDoses());
         assertEquals(dateOfVaccination2, result.getDateOfVaccination());
@@ -169,11 +205,13 @@ class VaccinatedControllerRestIT {
         assertEquals(vaccineType2, result.getVaccineType());
         assertEquals(lot2, result.getLot());
 
-        assertEquals(nextVaccinationDate2, result.getPatient().getVaccinationPointEvent().getOccasion());
+        assert eventResult != null;
+        assertEquals(nextVaccinationDate2, eventResult.getOccasion());
 
-        assertEquals(dateOfVaccination2, result.getPatient().getLastVaccinationDate());
-        assertEquals(numberSeriesDoses, result.getPatient().getDoses());
-        assertEquals(vaccineType2, result.getPatient().getVaccineType());
+        assert patientResult != null;
+        assertEquals(dateOfVaccination2, patientResult.getLastVaccinationDate());
+        assertEquals(numberSeriesDoses, patientResult.getDoses());
+        assertEquals(vaccineType2, patientResult.getVaccineType());
     }
 
     @Test
@@ -215,6 +253,7 @@ class VaccinatedControllerRestIT {
                 new ParameterizedTypeReference<List<VaccinatedDTO>>() {
                 }).getBody();
 
+        assert result != null;
         assertEquals(1, result.size());
         assertEquals(testId, result.get(0).getId());
     }
@@ -259,6 +298,7 @@ class VaccinatedControllerRestIT {
                 new ParameterizedTypeReference<List<VaccinatedDTO>>() {
                 }).getBody();
 
+        assert result != null;
         assertEquals(0, result.size());
     }
 

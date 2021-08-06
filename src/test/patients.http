@@ -1,13 +1,17 @@
 ### list all
-GET http://localhost:8080/api/patient/all
+GET http://localhost:8080/api/patients/
 Accept: application/json
 
-### find id
-GET http://localhost:8080/api/patient/1
+### find by id
+GET http://localhost:8080/api/patients/1
+Accept: application/json
+
+### find by taj
+GET http://localhost:8080/api/patients/taj/123456788
 Accept: application/json
 
 ### create
-POST http://localhost:8080/api/patient/
+POST http://localhost:8080/api/patients/
 Content-Type: application/json
 Accept: application/json
 
@@ -18,8 +22,8 @@ Accept: application/json
   "email": "johndoe@example.com"
 }
 
-### modify id
-PUT http://localhost:8080/api/patient/1
+### update by id
+PUT http://localhost:8080/api/patients/1
 Content-Type: application/json
 Accept: application/json
 
@@ -30,8 +34,8 @@ Accept: application/json
   "email": "janedode@example.com"
 }
 
-### delete id
-DELETE  http://localhost:8080/api/patient/1
+### delete by id
+DELETE  http://localhost:8080/api/patients/1
 
 ### delete all
-DELETE  http://localhost:8080/api/patient/deleteall
+DELETE  http://localhost:8080/api/patients/

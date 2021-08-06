@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class CreateVaccinationPointEventCommand {
 
     @NotNull
-    @Schema(description = "date of the reservation occasion vaccination", example = "2021-10-12 14:50")
+    @Schema(description = "date of the reservation occasion vaccination", example = "2021-10-12T14:50:00")
     private LocalDateTime occasion;
 
     @NotBlank

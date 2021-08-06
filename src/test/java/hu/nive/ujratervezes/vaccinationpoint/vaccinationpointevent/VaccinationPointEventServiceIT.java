@@ -110,6 +110,7 @@ class VaccinationPointEventServiceIT {
 
         long deleteId = service.create(patientId, command).getId();
         long testId = service.create(patientId2, command2).getId();
+        System.out.println(deleteId);;
 
         service.deleteById(deleteId);
 

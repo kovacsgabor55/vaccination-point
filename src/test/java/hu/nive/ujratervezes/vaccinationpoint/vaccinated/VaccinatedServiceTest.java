@@ -2,6 +2,10 @@ package hu.nive.ujratervezes.vaccinationpoint.vaccinated;
 
 import hu.nive.ujratervezes.vaccinationpoint.VaccineAdministered;
 import hu.nive.ujratervezes.vaccinationpoint.VaccineType;
+import hu.nive.ujratervezes.vaccinationpoint.patient.PatientDTO;
+import hu.nive.ujratervezes.vaccinationpoint.patient.PatientService;
+import hu.nive.ujratervezes.vaccinationpoint.vaccinationpointevent.VaccinationPointEventDTO;
+import hu.nive.ujratervezes.vaccinationpoint.vaccinationpointevent.VaccinationPointEventService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +16,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
 @Sql(statements = {
@@ -26,7 +29,14 @@ class VaccinatedServiceTest {
     @Autowired
     private VaccinatedService service;
 
+    @Autowired
+    private PatientService patientService;
+
+    @Autowired
+    private VaccinationPointEventService vaccinationPointEventService;
+
     private final long patientId = 1;
+    private final long vaccinationPointEventId = 1;
 
     @Test
     void create() {
@@ -41,6 +51,8 @@ class VaccinatedServiceTest {
         CreateVaccinatedCommand command = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
 
         VaccinatedDTO result = service.create(patientId, command);
+        PatientDTO resultPatient = patientService.findById(patientId);
+        VaccinationPointEventDTO resultEvent = vaccinationPointEventService.findById(vaccinationPointEventId);
 
         assertEquals(numberSeriesDoses, result.getNumberSeriesDoses());
         assertEquals(overallNumberDoses, result.getOverallNumberDoses());
@@ -49,11 +61,11 @@ class VaccinatedServiceTest {
         assertEquals(vaccineType, result.getVaccineType());
         assertEquals(lot, result.getLot());
 
-        assertEquals(nextVaccinationDate, result.getPatient().getVaccinationPointEvent().getOccasion());
+        assertEquals(nextVaccinationDate, resultEvent.getOccasion());
 
-        assertEquals(dateOfVaccination, result.getPatient().getLastVaccinationDate());
-        assertEquals(numberSeriesDoses, result.getPatient().getDoses());
-        assertEquals(vaccineType, result.getPatient().getVaccineType());
+        assertEquals(dateOfVaccination, resultPatient.getLastVaccinationDate());
+        assertEquals(numberSeriesDoses, resultPatient.getDoses());
+        assertEquals(vaccineType, resultPatient.getVaccineType());
     }
 
     @Test
@@ -69,6 +81,8 @@ class VaccinatedServiceTest {
         CreateVaccinatedCommand command = new CreateVaccinatedCommand(numberSeriesDoses, overallNumberDoses, dateOfVaccination, administered, vaccineType, lot, nextVaccination, nextVaccinationDate);
 
         VaccinatedDTO result = service.create(patientId, command);
+        PatientDTO resultPatient = patientService.findById(patientId);
+        List<VaccinationPointEventDTO> resultEvents = vaccinationPointEventService.listAll();
 
         assertEquals(numberSeriesDoses, result.getNumberSeriesDoses());
         assertEquals(overallNumberDoses, result.getOverallNumberDoses());
@@ -77,11 +91,11 @@ class VaccinatedServiceTest {
         assertEquals(vaccineType, result.getVaccineType());
         assertEquals(lot, result.getLot());
 
-        assertNull(result.getPatient().getVaccinationPointEvent());
+        assertEquals(0, resultEvents.size());
 
-        assertEquals(dateOfVaccination, result.getPatient().getLastVaccinationDate());
-        assertEquals(numberSeriesDoses, result.getPatient().getDoses());
-        assertEquals(vaccineType, result.getPatient().getVaccineType());
+        assertEquals(dateOfVaccination, resultPatient.getLastVaccinationDate());
+        assertEquals(numberSeriesDoses, resultPatient.getDoses());
+        assertEquals(vaccineType, resultPatient.getVaccineType());
     }
 
 
@@ -106,6 +120,8 @@ class VaccinatedServiceTest {
 
         long id = service.create(patientId, createCommand).getId();
         VaccinatedDTO result = service.updateById(id, modifyCommand);
+        PatientDTO resultPatient = patientService.findById(patientId);
+        VaccinationPointEventDTO resultEvent = vaccinationPointEventService.findById(vaccinationPointEventId);
 
         assertEquals(numberSeriesDoses, result.getNumberSeriesDoses());
         assertEquals(overallNumberDoses, result.getOverallNumberDoses());
@@ -114,11 +130,11 @@ class VaccinatedServiceTest {
         assertEquals(vaccineType2, result.getVaccineType());
         assertEquals(lot2, result.getLot());
 
-        assertEquals(nextVaccinationDate2, result.getPatient().getVaccinationPointEvent().getOccasion());
+        assertEquals(nextVaccinationDate2, resultEvent.getOccasion());
 
-        assertEquals(dateOfVaccination2, result.getPatient().getLastVaccinationDate());
-        assertEquals(numberSeriesDoses, result.getPatient().getDoses());
-        assertEquals(vaccineType2, result.getPatient().getVaccineType());
+        assertEquals(dateOfVaccination2, resultPatient.getLastVaccinationDate());
+        assertEquals(numberSeriesDoses, resultPatient.getDoses());
+        assertEquals(vaccineType2, resultPatient.getVaccineType());
     }
 
     @Test
@@ -143,6 +159,8 @@ class VaccinatedServiceTest {
 
         long id = service.create(patientId, createCommand).getId();
         VaccinatedDTO result = service.updateById(id, modifyCommand);
+        PatientDTO resultPatient = patientService.findById(patientId);
+        List<VaccinationPointEventDTO> resultEvents = vaccinationPointEventService.listAll();
 
         assertEquals(numberSeriesDoses2, result.getNumberSeriesDoses());
         assertEquals(overallNumberDoses, result.getOverallNumberDoses());
@@ -151,11 +169,11 @@ class VaccinatedServiceTest {
         assertEquals(vaccineType2, result.getVaccineType());
         assertEquals(lot2, result.getLot());
 
-        assertNull(result.getPatient().getVaccinationPointEvent());
+        assertEquals(0, resultEvents.size());
 
-        assertEquals(dateOfVaccination2, result.getPatient().getLastVaccinationDate());
-        assertEquals(numberSeriesDoses2, result.getPatient().getDoses());
-        assertEquals(vaccineType2, result.getPatient().getVaccineType());
+        assertEquals(dateOfVaccination2, resultPatient.getLastVaccinationDate());
+        assertEquals(numberSeriesDoses2, resultPatient.getDoses());
+        assertEquals(vaccineType2, resultPatient.getVaccineType());
     }
 
     @Test

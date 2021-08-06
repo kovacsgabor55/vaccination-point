@@ -51,7 +51,6 @@ public class VaccinatedService {
         if (command.isNextVaccination()) {
             vaccinationPointEvent.setOccasion(command.getNextVaccinationDate());
         } else {
-            patient.setVaccinationPointEvent(null);
             vaccinationPointEventRepository.deleteById(vaccinationPointId);
         }
         return modelMapper.map(newVaccinated, VaccinatedDTO.class);
@@ -75,7 +74,6 @@ public class VaccinatedService {
         if (command.isNextVaccination()) {
             patient.getVaccinationPointEvent().setOccasion(command.getNextVaccinationDate());
         } else {
-            patient.setVaccinationPointEvent(null);
             vaccinationPointEventRepository.deleteById(patient.getId());
         }
         return modelMapper.map(vaccinated, VaccinatedDTO.class);

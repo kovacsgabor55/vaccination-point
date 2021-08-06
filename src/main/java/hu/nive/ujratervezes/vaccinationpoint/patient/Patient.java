@@ -42,7 +42,7 @@ public class Patient {
     @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
     private VaccinationPointEvent vaccinationPointEvent;
 
-    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<Vaccinated> vaccinateds = new ArrayList<>();
 
     @Column(name = "last_vaccination_date")

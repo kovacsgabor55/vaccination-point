@@ -1,0 +1,77 @@
+### list all
+GET http://localhost:8080/api/vaccinateds/
+Accept: application/json
+
+### find by id
+GET http://localhost:8080/api/vaccinateds/1
+Accept: application/json
+
+### create by patient id
+POST http://localhost:8080/api/vaccinateds/patients/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "numberSeriesDoses": "1",
+  "overallNumberDoses": "2",
+  "dateOfVaccination": "2020-08-24T16:50:00",
+  "administered": "RIGHT_THIGH",
+  "vaccineType": "COMIRNATY",
+  "lot": "AF2541CB",
+  "nextVaccination": "true",
+  "nextVaccinationDate": "2020-08-24T16:50:00"
+}
+
+### create by patient id (one vaccinated)
+POST http://localhost:8080/api/vaccinateds/patients/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "numberSeriesDoses": "1",
+  "overallNumberDoses": "1",
+  "dateOfVaccination": "2020-08-24T16:50:00",
+  "administered": "RIGHT_THIGH",
+  "vaccineType": "COMIRNATY",
+  "lot": "AF2541CB",
+  "nextVaccination": "true",
+  "nextVaccinationDate": "2020-08-24T16:50:00"
+}
+
+### update by id
+PUT http://localhost:8080/api/vaccinateds/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "numberSeriesDoses": "1",
+  "overallNumberDoses": "2",
+  "dateOfVaccination": "2020-08-24T16:55:00",
+  "administered": "LEFT_THIGH",
+  "vaccineType": "SPUTNIK_V",
+  "lot": "EShg45dD",
+  "nextVaccination": "true",
+  "nextVaccinationDate": "2021-11-24T16:55:00"
+}
+
+### update by id last
+PUT http://localhost:8080/api/vaccinateds/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "numberSeriesDoses": "2",
+  "overallNumberDoses": "2",
+  "dateOfVaccination": "2020-08-24T16:55:00",
+  "administered": "RIGHT_THIGH",
+  "vaccineType": "COMIRNATY",
+  "lot": "HG76Se45",
+  "nextVaccination": "false",
+  "nextVaccinationDate": "2021-11-24T16:55:00"
+}
+
+### delete by id
+DELETE  http://localhost:8080/api/vaccinateds/1
+
+### delete all
+DELETE  http://localhost:8080/api/vaccinateds/

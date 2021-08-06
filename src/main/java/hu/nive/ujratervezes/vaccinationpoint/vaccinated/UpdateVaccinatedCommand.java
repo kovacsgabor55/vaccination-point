@@ -22,7 +22,7 @@ public class UpdateVaccinatedCommand {
     private int overallNumberDoses;
 
     @NotNull
-    @Schema(description = "date of vaccination of the vaccinated", example = "2020-08-24 16:55")
+    @Schema(description = "date of vaccination of the vaccinated", example = "2020-08-24T16:55:00")
     private LocalDateTime dateOfVaccination;
 
     @NotNull
@@ -42,6 +42,6 @@ public class UpdateVaccinatedCommand {
     private boolean nextVaccination;
 
     @NotNull
-    @Schema(description = "date of vaccination of the vaccinated", example = "2021-11-24 16:55")
+    @Schema(description = "date of vaccination of the vaccinated", example = "2021-11-24T16:55:00")
     private LocalDateTime nextVaccinationDate;
 }

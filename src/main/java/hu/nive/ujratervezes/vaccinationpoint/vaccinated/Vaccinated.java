@@ -24,7 +24,7 @@ public class Vaccinated {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
