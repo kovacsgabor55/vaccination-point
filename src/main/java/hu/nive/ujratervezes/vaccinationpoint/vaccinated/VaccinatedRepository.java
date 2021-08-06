@@ -9,7 +9,7 @@ public interface VaccinatedRepository extends JpaRepository<Vaccinated, Long> {
 
     @Override
     @Modifying
-    @Query("DELETE FROM Vaccinated v WHERE v.id =:id")
+    @Query("DELETE FROM Vaccinated v WHERE v.id = :id")
     void deleteById(@Param("id") Long id);
 
 

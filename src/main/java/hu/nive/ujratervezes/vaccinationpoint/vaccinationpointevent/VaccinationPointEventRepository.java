@@ -9,7 +9,7 @@ public interface VaccinationPointEventRepository extends JpaRepository<Vaccinati
 
     @Override
     @Modifying
-    @Query("DELETE FROM VaccinationPointEvent v WHERE v.id =:id")
+    @Query("DELETE FROM VaccinationPointEvent v WHERE v.id = :id")
     void deleteById(@Param("id") Long id);
 
 

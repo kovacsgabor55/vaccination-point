@@ -12,7 +12,7 @@
     <artifactId>vaccination-point</artifactId>
     <version>1.0.0</version>
     <name>vaccination-point</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Administered patient registration vaccination point booking occasion and vaccination.</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>16</java.version>
@@ -74,7 +74,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.4.3</version>
+            <version>1.5.9</version>
         </dependency>
     </dependencies>
 
@@ -84,6 +84,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
